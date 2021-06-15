@@ -14,6 +14,7 @@ async function seed() {
   console.log("db synced!");
 
   // Creating Users
+
   const [grace, cody, murphy, gordon, guy, rachel, sunny] = await Promise.all([
     User.create({
       username: "GraceChopper",
@@ -58,7 +59,7 @@ async function seed() {
       isAdmin: false,
     }),
   ]);
-
+  
   const [order1, order2, order3, order4, order5] = await Promise.all([
     Order.create({
       //first three items on products

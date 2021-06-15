@@ -1,11 +1,13 @@
-import React from 'react'
-import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import {logout} from '../store'
+import React from "react";
+import { connect } from "react-redux";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import SingleProduct from "./SingleProduct"
+import { logout } from "../store";
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+const Navbar = ({ handleClick, isLoggedIn }) => (
+  <Router>
   <div>
-    <h1>FS-App-Template</h1>
+    <h1>Plate Hopper</h1>
     <nav>
       {isLoggedIn ? (
         <div>
@@ -25,23 +27,25 @@ const Navbar = ({handleClick, isLoggedIn}) => (
     </nav>
     <hr />
   </div>
-)
+  <Route exact path="/products/:id" component={SingleProduct} />
+  </Router>
+);
 
 /**
  * CONTAINER
  */
-const mapState = state => {
+const mapState = (state) => {
   return {
-    isLoggedIn: !!state.auth.id
-  }
-}
+    isLoggedIn: !!state.auth.id,
+  };
+};
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
     handleClick() {
-      dispatch(logout())
-    }
-  }
-}
+      dispatch(logout());
+    },
+  };
+};
 
-export default connect(mapState, mapDispatch)(Navbar)
+export default connect(mapState, mapDispatch)(Navbar);
