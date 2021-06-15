@@ -15,8 +15,15 @@ const User = db.define('user', {
   password: {
     type: Sequelize.STRING,
   },
-  githubId: {
-    type: Sequelize.INTEGER
+  email: {
+    type: Sequelize.STRING,
+    unique: true,
+    allowNull: false,
+    isEmail: true
+  },
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 })
 
