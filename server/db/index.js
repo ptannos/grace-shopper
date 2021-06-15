@@ -8,7 +8,7 @@ const Order = require("./models/order");
 const Category = require("./models/category");
 
 User.hasMany(Order);
-Order.belongsTo(User, { as: "Customer" });
+Order.belongsTo(User);
 
 Order.belongsToMany(Product, { through: "itemsOrdered" });
 Product.belongsToMany(Order, { through: "itemsOrdered" });
