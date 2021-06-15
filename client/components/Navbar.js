@@ -1,11 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import SingleProduct from "./SingleProduct"
 import { logout } from "../store";
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
+  <Router>
   <div>
-    <h1>FS-App-Template</h1>
+    <h1>Plate Hopper</h1>
     <nav>
       {isLoggedIn ? (
         <div>
@@ -20,12 +22,13 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
           {/* The navbar will show these links before you log in */}
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
-          <Link to="/products/:id">Product</Link>
         </div>
       )}
     </nav>
     <hr />
   </div>
+  <Route exact path="/products/:id" component={SingleProduct} />
+  </Router>
 );
 
 /**

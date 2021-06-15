@@ -26,15 +26,22 @@ class SingleProduct extends React.Component {
   }
 
   render() {
-    const product = this.props;
-    console.log("test");
-    return <div>Test</div>;
+    const product = this.props.product || {};
+    console.log('PRODUCT', product);
+    return (
+      <div>
+        <p>
+          <img src={product.imageUrl} />
+        </p>
+      </div>
+    );
   }
 }
 
 const mapState = (state) => {
+  console.log('THIS IS STATE', state)
   return {
-    product: state.product,
+    product: state.singleProduct,
   };
 };
 
