@@ -59,7 +59,7 @@ async function seed() {
       isAdmin: false,
     }),
   ]);
-  
+
   const [order1, order2, order3, order4, order5] = await Promise.all([
     Order.create({
       //first three items on products
@@ -98,7 +98,23 @@ async function seed() {
     }),
   ]);
 
-  const products = await Promise.all([
+  const [
+    paella,
+    som,
+    poutine,
+    tacos,
+    crab,
+    roll,
+    lasagna,
+    poke,
+    croissant,
+    chow,
+    tarts,
+    pierogi,
+    pizza,
+    curry,
+    sushi,
+  ] = await Promise.all([
     Product.create({
       name: "Seafood Paella",
       description: `The sea is lapping just by your feet, a warm breeze whips the tablecloth around your legs and a steamy pan of paella sits in front of you. Shrimp, lobster, mussels and cuttlefish combine with white rice and various herbs, oil and salt in this Valencian dish to send you immediately into holiday mode. Though if you have it in Spain, you're probably there already.`,
@@ -259,7 +275,7 @@ async function seed() {
       name: "Gluten-free",
     }),
     Category.create({
-      name: "Dessert",
+      name: "Pastries",
     }),
     Category.create({
       name: "Dinner",
@@ -271,7 +287,7 @@ async function seed() {
       name: "Pasta",
     }),
     Category.create({
-      name: "Steak",
+      name: "Beef",
     }),
     Category.create({
       name: "Chicken",
@@ -289,13 +305,16 @@ async function seed() {
       name: "Lunch",
     }),
     Category.create({
+      name: "Breakfast",
+    }),
+    Category.create({
       name: "Dairy-free",
     }),
     Category.create({
       name: "Low-carb",
     }),
     Category.create({
-      name: "Kosher",
+      name: "Pork",
     }),
   ]);
 
@@ -305,21 +324,42 @@ async function seed() {
   await order4.setUser(gordon);
   await order5.setUser(guy);
 
-  await order1.setProducts([products[0], products[1], products[2]]);
-  await order2.setProducts([products[3], products[4]]);
-  await order3.setProducts(products[5]);
-  await order4.setProducts([products[0], products[2]]);
-  await order5.setProducts([
-    products[0],
-    products[1],
-    products[2],
-    products[3],
-    products[4],
-  ]);
+  await order1.setProducts([paella, som, tacos]);
+  await order2.setProducts([poutine, crab]);
+  await order3.setProducts(roll);
+  await order4.setProducts([paella, tacos]);
+  await order5.setProducts([paella, som, tacos, poutine, crab, roll]);
 
-  await products[0].setCategories([categories[3], categories[4]]);
-  await products[2].setCategories([categories[10]]);
-  await products[6].setCategories([categories[0], categories[5]]);
+  await paella.setCategories([categories[3], categories[4]]);
+  await som.setCategories([
+    categories[1],
+    categories[9],
+    categories[10],
+    categories[13],
+  ]);
+  await poutine.setCategories([categories[1], categories[10]]);
+  await tacos.setCategories([categories[1], categories[6], categories[13]]);
+  await crab.setCategories([categories[4], categories[8]]);
+  await roll.setCategories([
+    categories[1],
+    categories[9],
+    categories[10],
+    categories[13],
+  ]);
+  await lasagna.setCategories([categories[0], categories[3], categories[5]]);
+  await poke.setCategories(
+    categories[4],
+    categories[9],
+    categories[10],
+    categories[11]
+  );
+  await croissant.setCategories(categories[2]);
+  await chow.setCategories([categories[0], categories[8]]);
+  await tarts.setCategories(categories[2]);
+  await pierogi.setCategories([categories[0], categories[10]]);
+  await pizza.setCategories([categories[0], categories[10]]);
+  await curry.setCategories([categories[1], categories[3], categories[8]]);
+  await sushi.setCategories(categories[4]);
 
   // console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
@@ -327,7 +367,23 @@ async function seed() {
     users: [grace, cody, murphy, gordon, guy, rachel, sunny],
     categories,
     orders: [order1, order2, order3, order4, order5],
-    products,
+    products: [
+      paella,
+      som,
+      tacos,
+      poutine,
+      crab,
+      roll,
+      lasagna,
+      poke,
+      croissant,
+      chow,
+      tarts,
+      pierogi,
+      pizza,
+      curry,
+      sushi,
+    ],
   };
 }
 
