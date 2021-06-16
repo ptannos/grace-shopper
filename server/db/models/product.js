@@ -17,7 +17,7 @@ const Product = db.define("product", {
       notEmpty: true,
     },
   },
-  imageUrl: {
+  imageURL: {
     type: Sequelize.TEXT,
     defaultValue:
       "https://library.kissclipart.com/20181204/xte/kissclipart-clip-art-of-dinner-clipart-dinner-food-clip-art-b609d6ea17150275.jpg",
