@@ -5,15 +5,6 @@ import { connect } from "react-redux";
 class SingleProduct extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      name: "",
-      description: "",
-      imageUrl: "",
-      prepTime: 0.0,
-      quantity: 0,
-      price: 0.0,
-      country: "",
-    };
   }
 
   componentDidMount() {
@@ -31,7 +22,7 @@ class SingleProduct extends React.Component {
     return (
       <div>
         <p>
-          <img src={product.imageUrl} />
+          <img src={product.imageURL} />
         </p>
       </div>
     );
@@ -41,7 +32,7 @@ class SingleProduct extends React.Component {
 const mapState = (state) => {
   console.log('THIS IS STATE', state)
   return {
-    product: state.singleProduct,
+    product: state.singleProduct
   };
 };
 
