@@ -1,32 +1,32 @@
 import axios from "axios";
 
-//action type
-const GET_CART = "GET_CART";
+//Action types
+const SET_CART = "SET_CART";
 
-//action creator
-const getCart = (items) => ({
-  type: GET_CART,
-  items,
+//Action creators
+const setCart = (cart) => ({
+  type: SET_CART,
+  cart,
 });
 
-//thunk
-export const fetchCart = (orderId) => {
+//Thunks
+export const fetchCart = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`/api/cart/${orderId}`);
+      const { data } = await axios.get("/api/cart");
       console.log(data);
-      dispatch(getCart(data));
+      dispatch(setCart(data));
     } catch (err) {
       console.log(err);
     }
   };
 };
 
-//reducer
+//Reducer
 export default function (state = {}, action) {
   switch (action.type) {
-    case GET_CART:
-      return action.items;
+    case SET_CART:
+      return action.cart;
     default:
       return state;
   }
