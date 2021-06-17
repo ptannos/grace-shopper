@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Order, Product, Category },
+  models: { User, Order, Product, Category, OrderedItem },
 } = require("../server/db");
 
 /**
@@ -318,17 +318,98 @@ async function seed() {
     }),
   ]);
 
+  await Promise.all([
+    OrderedItem.create({
+      orderId: 1,
+      productId: 1,
+      itemQty: 4,
+      itemPrice: 20
+    }),
+    OrderedItem.create({
+      orderId: 1,
+      productId: 2,
+      itemQty: 3,
+      itemPrice: 15
+    }),
+    OrderedItem.create({
+      orderId: 5,
+      productId: 4,
+      itemQty: 10,
+      itemPrice: 25
+    }),
+    OrderedItem.create({
+      orderId: 5,
+      productId: 3,
+      itemQty: 2,
+      itemPrice: 30
+    }),
+    OrderedItem.create({
+      orderId: 5,
+      productId: 5,
+      itemQty: 8,
+      itemPrice: 24
+    }),
+    OrderedItem.create({
+      orderId: 2,
+      productId: 6,
+      itemQty: 1,
+      itemPrice: 40
+    }),
+    OrderedItem.create({
+      orderId: 3,
+      productId: 1,
+      itemQty: 4,
+      itemPrice: 20
+    }),
+    OrderedItem.create({
+      orderId: 1,
+      productId: 4,
+      itemQty: 1,
+      itemPrice: 25
+    }),
+    OrderedItem.create({
+      orderId: 5,
+      productId: 1,
+      itemQty: 2,
+      itemPrice: 20
+    }),
+    OrderedItem.create({
+      orderId: 3,
+      productId: 2,
+      itemQty: 5,
+      itemPrice: 15
+    }),
+    OrderedItem.create({
+      orderId: 4,
+      productId: 4,
+      itemQty: 3,
+      itemPrice: 25
+    }),
+    OrderedItem.create({
+      orderId: 4,
+      productId: 3,
+      itemQty: 2,
+      itemPrice: 30
+    }),
+    OrderedItem.create({
+      orderId: 4,
+      productId: 5,
+      itemQty: 5,
+      itemPrice: 24
+    }),
+    OrderedItem.create({
+      orderId: 5,
+      productId: 6,
+      itemQty: 5,
+      itemPrice: 40
+    }),
+  ]);
+
   await order1.setUser(grace);
   await order2.setUser(cody);
   await order3.setUser(cody);
   await order4.setUser(gordon);
   await order5.setUser(guy);
-
-  await order1.setProducts([paella, som, tacos]);
-  await order2.setProducts([poutine, crab]);
-  await order3.setProducts(roll);
-  await order4.setProducts([paella, tacos]);
-  await order5.setProducts([paella, som, tacos, poutine, crab, roll]);
 
   await paella.setCategories([categories[3], categories[4]]);
   await som.setCategories([
