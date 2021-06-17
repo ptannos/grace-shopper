@@ -5,6 +5,7 @@ const TOKEN = "token";
 const SET_CART = "SET_CART";
 const GET_GUEST_CART = "GET_GUEST_CART";
 const SAVE_GUEST_CART = "SAVE_GUEST_CART";
+const ADD_TO_CART = "ADD_TO_CART";
 
 //Action creators
 const setCart = (cart) => ({
@@ -21,6 +22,11 @@ const saveGuestCart = (cart) => ({
   type: SAVE_GUEST_CART,
   cart,
 });
+
+const addToCart = (product) => ({
+  type: ADD_TO_CART,
+  product
+})
 
 //Thunks
 export const fetchCart = () => {
@@ -60,6 +66,17 @@ export const _saveGuestCart = (cart) => {
     }
   };
 };
+
+export const _addToCart = (product) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get
+      dispatch(addToCart(data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
 
 //Reducer
 export default function (state = {}, action) {

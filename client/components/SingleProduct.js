@@ -8,17 +8,13 @@ class SingleProduct extends React.Component {
   }
 
   componentDidMount() {
-    try {
-      const id = this.props.match.params.id;
-      this.props.loadSingleProduct(id);
-    } catch (err) {
-      console.log(err);
-    }
+    const id = this.props.match.params.id;
+    this.props.loadSingleProduct(id);
   }
 
-  // handleClick() {
+  handleClick() {
 
-  // }
+  }
 
   render() {
     const product = this.props.product || {};
@@ -32,7 +28,7 @@ class SingleProduct extends React.Component {
         </p>
         <p>${product.price}.00</p>
         <p>{product.description}</p>
-        {product.quantity > 0 ? <button>Add to Cart</button> : "Sold Out"}
+        {product.quantity > 0 ? <button onClick={handleClick()}> Add to Cart</button> : "Sold Out"}
       </div>
     );
   }
