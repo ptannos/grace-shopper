@@ -15,9 +15,13 @@ router.get("/", requireToken, async (req, res, next) => {
         userId: req.user.id,
         status: "cart",
       },
-      include: [{ model: OrderedItem }],
     });
-    res.send(cart);
+    const products = await OrderedItem.findAll({
+      where: {
+        orderId: cart.id,
+      },
+    });
+    res.send(products);
   } catch (err) {
     next(err);
   }
