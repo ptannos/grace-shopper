@@ -16,23 +16,32 @@ class SingleProduct extends React.Component {
     }
   }
 
+  // handleClick() {
+
+  // }
+
   render() {
     const product = this.props.product || {};
-    console.log('PRODUCT', product);
+    console.log("PRODUCT", product);
     return (
       <div>
+        <img src={product.imageURL} />
+        <h3>{product.name}</h3>
         <p>
-          <img src={product.imageURL} />
+          {product.prepTime} {product.prepTime > 1 ? "hours" : "hour"}
         </p>
+        <p>${product.price}.00</p>
+        <p>{product.description}</p>
+        {product.quantity > 0 ? <button>Add to Cart</button> : "Sold Out"}
       </div>
     );
   }
 }
 
 const mapState = (state) => {
-  console.log('THIS IS STATE', state)
+  console.log("THIS IS STATE", state);
   return {
-    product: state.singleProduct
+    product: state.singleProduct,
   };
 };
 
