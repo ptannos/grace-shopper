@@ -1,18 +1,27 @@
 const router = require("express").Router();
-const {
-  models: { OrderedItem },
-} = require("../db");
+const Order = require("../db/models/order");
+const OrderedItem = require("../db/models/orderedItem");
+const { requireToken, isUser } = require("./gatekeepingMiddleware");
+
 module.exports = router;
 
-//change to /:userId/:orderId
-router.get("/:orderId", async (req, res, next) => {
+// GET api/cart
+
+// This will check for order status rather than order Id
+router.get("/", requireToken, async (req, res, next) => {
   try {
-    const orderedItems = await OrderedItem.findAll({
+    const cart = await Order.findOne({
       where: {
-        orderId: req.params.orderId,
+        userId: req.user.id,
+        status: "cart",
       },
     });
-    res.send(orderedItems);
+    const products = await OrderedItem.findAll({
+      where: {
+        orderId: cart.id,
+      },
+    });
+    res.send(products);
   } catch (err) {
     next(err);
   }
