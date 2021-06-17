@@ -1,4 +1,5 @@
 import axios from "axios";
+const TOKEN = "token";
 
 //Action types
 const SET_CART = "SET_CART";
@@ -13,8 +14,12 @@ const setCart = (cart) => ({
 export const fetchCart = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get("/api/cart");
-      console.log(data);
+      const token = window.localStorage.getItem(TOKEN);
+      const { data } = await axios.get("/api/cart", {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(setCart(data));
     } catch (err) {
       console.log(err);

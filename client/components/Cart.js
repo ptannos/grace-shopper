@@ -4,7 +4,9 @@ import { fetchCart } from "../store/cart";
 
 class Cart extends Component {
   componentDidMount() {
-    this.props.isLoggedIn && this.props.loadCart();
+    this.props.loadCart();
+
+    // this.props.isLoggedIn && this.props.loadCart();
     //if user is not logged in, show guest cart
   }
 
