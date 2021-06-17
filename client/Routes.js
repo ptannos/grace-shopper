@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import AllProducts from "./components/AllProducts";
 import SingleProduct from "./components/SingleProduct";
+import Cart from "./components/Cart";
 import { Login, Signup } from "./components/AuthForm";
 import { me } from "./store";
 
@@ -30,6 +31,10 @@ class Routes extends Component {
         <Switch>
           <Route path="/" exact component={AllProducts} />
           <Route path="/products/:id" component={SingleProduct} />
+          <Route
+            path="/cart"
+            component={() => <Cart isLoggedIn={this.props.isLoggedIn} />}
+          />
         </Switch>
       </div>
     );
