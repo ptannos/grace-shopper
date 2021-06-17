@@ -1,10 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchCart } from "../store/cart";
+import { fetchCart, fetchGuestCart, _saveGuestCart } from "../store/cart";
 
 class Cart extends Component {
+  // constructor() {
+  //     super() {
+  //         this.state: {
+
+  //         }
+  //     }
+  // }
+
   componentDidMount() {
-    this.props.loadCart();
+    this.props.isLoggedIn ? this.props.loadCart() : this.props.loadGuestCart();
 
     // this.props.isLoggedIn && this.props.loadCart();
     //if user is not logged in, show guest cart
@@ -27,6 +35,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     loadCart: () => dispatch(fetchCart()),
+    loadGuestCart: () => dispatch(fetchGuestCart()),
   };
 };
 
