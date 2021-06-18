@@ -1,3 +1,5 @@
+import axios from "axios";
+
 //Constants
 const ADD_TO_CART = "ADD_TO_CART";
 const SUBTRACT_FROM_CART = "SUBTRACT_FROM_CART";
@@ -39,6 +41,23 @@ export const _addToCart = (product) => (dispatch, getState) => {
   }
   dispatch(addToCart(cartItems));
   localStorage.setItem("cartItems", JSON.stringify(cartItems));
+};
+
+export const _addToUserCart = (cartItems) => async (dispatch, getState) => {
+  try {
+    const userId = getState().auth.id;
+    const token = window.localStorage.getItem("token");
+    if (userId) {
+      const { data } = await axios.put("/api/cart", cartItems, {
+        headers: {
+          authorization: token,
+        },
+      });
+      dispatch(addToCart(data));
+    }
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const _subtractFromCart = (product) => (dispatch, getState) => {
