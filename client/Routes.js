@@ -31,10 +31,7 @@ class Routes extends Component {
         <Switch>
           <Route path="/" exact component={AllProducts} />
           <Route path="/products/:id" component={SingleProduct} />
-          <Route
-            path="/cart"
-            component={() => <Cart isLoggedIn={this.props.isLoggedIn} />}
-          />
+          <Route path="/cart" component={Cart} />
         </Switch>
       </div>
     );

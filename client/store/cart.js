@@ -1,17 +1,23 @@
 //Constants
 const ADD_TO_CART = "ADD_TO_CART";
+const SUBTRACT_FROM_CART = "SUBTRACT_FROM_CART";
 const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 
 //Actions
 const addToCart = (cartItems) => ({
   type: ADD_TO_CART,
-  cartItems
-})
+  cartItems,
+});
+
+const subtractFromCart = (cartItems) => ({
+  type: SUBTRACT_FROM_CART,
+  cartItems,
+});
 
 const removeFromCart = (cartItems) => ({
   type: REMOVE_FROM_CART,
-  cartItems
-})
+  cartItems,
+});
 
 //Thunks
 export const _addToCart = (product) => (dispatch, getState) => {
@@ -21,26 +27,49 @@ export const _addToCart = (product) => (dispatch, getState) => {
     if (item.id === product.id) {
       cartExists = true;
       item.count++;
+      item.subtotal = item.price * item.count;
     }
   });
   if (!cartExists) {
-    cartItems.push({...product, count: 1})
+    cartItems.push({
+      ...product,
+      count: 1,
+      subtotal: product.price,
+    });
   }
   dispatch(addToCart(cartItems));
-  localStorage.setItem("cartItems", JSON.stringify(cartItems))
-}
+  localStorage.setItem("cartItems", JSON.stringify(cartItems));
+};
+
+export const _subtractFromCart = (product) => (dispatch, getState) => {
+  const cartItems = getState().cart.cartItems.slice();
+  cartItems.forEach((item) => {
+    if (item.id === product.id) {
+      item.count--;
+      item.subtotal = item.price * item.count;
+    }
+  });
+  dispatch(subtractFromCart(cartItems));
+  localStorage.setItem("cartItems", JSON.stringify(cartItems));
+};
 
 export const _removeFromCart = (product) => (dispatch, getState) => {
-  const cartItems = getState().cart.cartItems.slice().filter((item) => item.id !== product.id);
-  dispatch(removeFromCart(cartItems))
-  localStorage.setItem("cartItems", JSON.stringify(cartItems))
+  const cartItems = getState()
+    .cart.cartItems.slice()
+    .filter((item) => item.id !== product.id);
+  dispatch(removeFromCart(cartItems));
+  localStorage.setItem("cartItems", JSON.stringify(cartItems));
 };
 
 //Reducer
 export default function (
-  state = { cartItems: JSON.parse(localStorage.getItem("cartItems") || "[]")}, action) {
+  state = { cartItems: JSON.parse(localStorage.getItem("cartItems") || "[]") },
+  action
+) {
   switch (action.type) {
     case ADD_TO_CART:
+      return { cartItems: action.cartItems };
+    case SUBTRACT_FROM_CART:
       return { cartItems: action.cartItems };
     case REMOVE_FROM_CART:
       return { cartItems: action.cartItems };
