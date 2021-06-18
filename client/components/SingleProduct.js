@@ -1,10 +1,12 @@
 import React from "react";
 import { fetchSingleProduct } from "../store/singleProduct";
+import { _addToCart, _removeFromCart } from "../store/cart";
 import { connect } from "react-redux";
 
 class SingleProduct extends React.Component {
   constructor(props) {
     super(props);
+    this.handleClick = this.handleClick.bind(this)
   }
 
   componentDidMount() {
@@ -13,10 +15,11 @@ class SingleProduct extends React.Component {
   }
 
   handleClick() {
-
+    this.props.addProduct(this.props.product)
   }
 
   render() {
+
     const product = this.props.product || {};
     console.log("PRODUCT", product);
     return (
@@ -28,7 +31,7 @@ class SingleProduct extends React.Component {
         </p>
         <p>${product.price}.00</p>
         <p>{product.description}</p>
-        {product.quantity > 0 ? <button onClick={handleClick()}> Add to Cart</button> : "Sold Out"}
+        {product.quantity > 0 ? <button onClick={() => this.handleClick()}> Add to Cart</button> : "Sold Out"}
       </div>
     );
   }
@@ -44,6 +47,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     loadSingleProduct: (id) => dispatch(fetchSingleProduct(id)),
+    addProduct: (product) => dispatch(_addToCart(product)),
+    removeProduct: (product) => dispatch(_removeFromCart(product))
   };
 };
 

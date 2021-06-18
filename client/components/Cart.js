@@ -3,13 +3,13 @@ import { connect } from "react-redux";
 import { fetchCart, fetchGuestCart, _saveGuestCart } from "../store/cart";
 
 class Cart extends Component {
-  constructor() {
-    super() {
-        this.state: {
+  // constructor() {
+  //   super() {
+  //       this.state: {
 
-        }
-      }
-  }
+  //       }
+  //     }
+  // }
 
   componentDidMount() {
     this.props.isLoggedIn ? this.props.loadCart() : this.props.loadGuestCart();
