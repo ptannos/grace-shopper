@@ -47,6 +47,7 @@ export const _addToUserCart = (cartItems) => async (dispatch, getState) => {
   try {
     const userId = getState().auth.id;
     const token = window.localStorage.getItem("token");
+
     if (userId) {
       const { data } = await axios.put("/api/cart", cartItems, {
         headers: {
