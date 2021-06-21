@@ -65,6 +65,7 @@ async function seed() {
       //first three items on products
       totalPrice: 80,
       totalQty: 3,
+      recipient: "Cody Bark",
       shippingAddress: "2161 Kinney St, Holyoke, MA 01040",
       status: "cart",
     }),
@@ -72,6 +73,7 @@ async function seed() {
       // items 4 and 5
       totalPrice: 55,
       totalQty: 2,
+      recipient: "Grace Hopper",
       shippingAddress: "2196 Clarence Court, Rancho Cucamonga, CA 91730",
       status: "cancelled",
     }),
@@ -79,6 +81,7 @@ async function seed() {
       // item 6
       totalPrice: 20,
       totalQty: 1,
+      recipient: "Murphy Bark",
       shippingAddress: "4241 Pick Street, Aurora, CO 80011",
       status: "purchased",
     }),
@@ -86,6 +89,7 @@ async function seed() {
       // items 1 and 3
       totalPrice: 60,
       totalQty: 2,
+      recipient: "Rachel Ray",
       shippingAddress: "3000 Oak Street, Old Forge, NY 13420",
       status: "shipped",
     }),
@@ -93,6 +97,7 @@ async function seed() {
       // items 1 through 5
       totalPrice: 135,
       totalQty: 5,
+      recipient: "Gordon Ramsey",
       shippingAddress: "2335 Patterson Rd Apt 3, Brooklyn, NY 11204",
       status: "delivered",
     }),
@@ -323,85 +328,85 @@ async function seed() {
       orderId: 1,
       productId: 1,
       itemQty: 4,
-      itemPrice: 20
+      itemPrice: 20,
     }),
     OrderedItem.create({
       orderId: 1,
       productId: 2,
       itemQty: 3,
-      itemPrice: 15
+      itemPrice: 15,
     }),
     OrderedItem.create({
       orderId: 5,
       productId: 4,
       itemQty: 10,
-      itemPrice: 25
+      itemPrice: 25,
     }),
     OrderedItem.create({
       orderId: 5,
       productId: 3,
       itemQty: 2,
-      itemPrice: 30
+      itemPrice: 30,
     }),
     OrderedItem.create({
       orderId: 5,
       productId: 5,
       itemQty: 8,
-      itemPrice: 24
+      itemPrice: 24,
     }),
     OrderedItem.create({
       orderId: 2,
       productId: 6,
       itemQty: 1,
-      itemPrice: 40
+      itemPrice: 40,
     }),
     OrderedItem.create({
       orderId: 3,
       productId: 1,
       itemQty: 4,
-      itemPrice: 20
+      itemPrice: 20,
     }),
     OrderedItem.create({
       orderId: 1,
       productId: 4,
       itemQty: 1,
-      itemPrice: 25
+      itemPrice: 25,
     }),
     OrderedItem.create({
       orderId: 5,
       productId: 1,
       itemQty: 2,
-      itemPrice: 20
+      itemPrice: 20,
     }),
     OrderedItem.create({
       orderId: 3,
       productId: 2,
       itemQty: 5,
-      itemPrice: 15
+      itemPrice: 15,
     }),
     OrderedItem.create({
       orderId: 4,
       productId: 4,
       itemQty: 3,
-      itemPrice: 25
+      itemPrice: 25,
     }),
     OrderedItem.create({
       orderId: 4,
       productId: 3,
       itemQty: 2,
-      itemPrice: 30
+      itemPrice: 30,
     }),
     OrderedItem.create({
       orderId: 4,
       productId: 5,
       itemQty: 5,
-      itemPrice: 24
+      itemPrice: 24,
     }),
     OrderedItem.create({
       orderId: 5,
       productId: 6,
       itemQty: 5,
-      itemPrice: 40
+      itemPrice: 40,
     }),
   ]);
 

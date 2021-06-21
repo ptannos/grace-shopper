@@ -29,13 +29,36 @@ form div {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  margin: 50px 0 50px 0;
+}
+
+.product {
+  background: lightgray;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 25px 25px 0;
+  padding: 15px;
+}
+
+.product p,
+.product h3 {
+  margin-bottom: 5px;
 }
 
 .product img {
-  width: 400px;
+  max-width: 300px;
   height: 200px;
   object-fit: cover;
+}
+
+#product-details {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: space-between;
+  align-items: baseline;
 }
 
 .nav-container {
