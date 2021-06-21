@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import AllProducts from "./components/AllProducts";
 import SingleProduct from "./components/SingleProduct";
+import CreateProduct from "./components/CreateProduct"
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
 import Confirmation from "./components/Confirmation";
@@ -24,7 +25,7 @@ class Routes extends Component {
     return (
       <div>
         {isLoggedIn ? (
-          <Route path="/" />
+          <Redirect path="/" />
         ) : (
           <Switch>
             <Route path="/login" component={Login} />
@@ -32,13 +33,17 @@ class Routes extends Component {
           </Switch>
         )}
         {isAdmin ? (
-          <Route path="/users" component={AllUsers} />
+          <Switch>
+            <Route path="/users" component={AllUsers} />
+            {/* <Route exact path="/products/create" component={CreateProduct} /> */}
+          </Switch>
         ) : (
           <Route path="/users">This page is for our eyes only.</Route>
         )}
         <Switch>
           <Route exact path="/" component={AllProducts} />
-          <Route path="/products/:id" component={SingleProduct} />
+          <Route exact path="/products/create" component={CreateProduct} />
+          <Route exact path="/products/:id" component={SingleProduct} />
           <Route exact path="/cart" component={Cart} />
           <Route exact path="/checkout" component={Checkout} />
           <Route path="/confirmation" component={Confirmation} />
