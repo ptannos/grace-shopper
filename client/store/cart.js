@@ -4,6 +4,7 @@ import axios from "axios";
 const ADD_TO_CART = "ADD_TO_CART";
 const SUBTRACT_FROM_CART = "SUBTRACT_FROM_CART";
 const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+const CLEAR_CART = "CLEAR_CART";
 
 //Actions
 const addToCart = (cartItems) => ({
@@ -19,6 +20,10 @@ const subtractFromCart = (cartItems) => ({
 const removeFromCart = (cartItems) => ({
   type: REMOVE_FROM_CART,
   cartItems,
+});
+
+const clearCart = () => ({
+  type: CLEAR_CART,
 });
 
 //Thunks
@@ -81,6 +86,11 @@ export const _removeFromCart = (product) => (dispatch, getState) => {
   localStorage.setItem("cartItems", JSON.stringify(cartItems));
 };
 
+export const _clearCart = () => (dispatch) => {
+  dispatch(clearCart());
+  localStorage.clear("cartItems");
+};
+
 //Reducer
 export default function (
   state = { cartItems: JSON.parse(localStorage.getItem("cartItems") || "[]") },
@@ -93,6 +103,8 @@ export default function (
       return { cartItems: action.cartItems };
     case REMOVE_FROM_CART:
       return { cartItems: action.cartItems };
+    case CLEAR_CART:
+      return { cartItems: [] };
     default:
       return state;
   }

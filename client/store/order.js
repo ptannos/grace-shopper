@@ -10,12 +10,14 @@ const createOrder = (order) => ({
 });
 
 // thunk
-export const _createOrder = () => {
-  return async (dispatch, getState) => {
+export const _createOrder = (orderInfo, history) => {
+  return async (dispatch) => {
     try {
-      const cartItems = getState().cart.cartItems.slice();
-      const { data } = await axios.post(`/api/order`, cartItems);
+      //const cartItems = getState().cart.cartItems.slice();
+      const { data } = await axios.put("/api/orders", orderInfo);
       dispatch(createOrder(data));
+      history.push("/confirmation");
+      localStorage.clear();
     } catch (err) {
       console.log(err);
     }
