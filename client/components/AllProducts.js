@@ -1,6 +1,5 @@
 import React from "react";
 import { fetchAllProducts, deleteProduct } from "../store/allProducts";
-import { updateProduct } from "../store/singleProduct";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "react-dom";
@@ -16,10 +15,6 @@ class AllProducts extends React.Component {
     } catch (err) {
       console.log(err);
     }
-  }
-
-  handleEdit(id) {
-    this.props.editProduct(id);
   }
 
   handleDelete(id) {
@@ -45,9 +40,6 @@ class AllProducts extends React.Component {
                 </p>
                 {isAdmin ? (
                   <div>
-                    <button onClick={() => this.handleEdit(product.id)}>
-                      Edit
-                    </button>
                     <button onClick={() => this.handleDelete(product.id)}>
                       Delete
                     </button>
@@ -76,7 +68,6 @@ const mapDispatch = (dispatch) => {
   return {
     loadProducts: () => dispatch(fetchAllProducts()),
     removeProduct: (id) => dispatch(deleteProduct(id)),
-    editProduct: (id) => dispatch(updateProduct(id)),
   };
 };
 
