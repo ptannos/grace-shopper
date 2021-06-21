@@ -21,13 +21,15 @@ class AllProducts extends React.Component {
         {products.map((product) => {
           return (
             <div key={product.id} className="product">
-              <Link to={`/products/${product.id}`}>
-                <img src={product.imageURL} />
-                <h3>{product.name}</h3>
+              <img src={product.imageURL} />
+              <div id="product-details">
+                <Link to={`/products/${product.id}`}>
+                  <h3>{product.name}</h3>
+                </Link>
                 <p>
                   {product.prepTime} {product.prepTime > 1 ? "hours" : "hour"}
                 </p>
-              </Link>
+              </div>
             </div>
           );
         })}

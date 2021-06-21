@@ -13,14 +13,14 @@ const OrderedItem = db.define(
         notEmpty: true,
       },
     },
-    orderId: {
-      type: Sequelize.INTEGER,
-    },
-    productId: {
-      type: Sequelize.INTEGER,
-    },
+    // orderId: {
+    //   type: Sequelize.INTEGER,
+    // },
+    // productId: {
+    //   type: Sequelize.INTEGER,
+    // },
     itemQty: {
-      type: Sequelize.STRING,
+      type: Sequelize.INTEGER,
     },
     itemPrice: {
       type: Sequelize.INTEGER,
