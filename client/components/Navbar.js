@@ -31,7 +31,7 @@ const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
           <Link to="/users">View All Users</Link>
         </div>
       ) : (
-        ''
+        ""
       )}
     </nav>
     <hr />
@@ -42,10 +42,10 @@ const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
  * CONTAINER
  */
 const mapState = (state) => {
-  console.log("NAVBAR STATE", state)
+  console.log("NAVBAR STATE", state);
   return {
     isLoggedIn: !!state.auth.id,
-    isAdmin: state.auth.isAdmin
+    isAdmin: state.auth.isAdmin,
   };
 };
 
