@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   _addToCart,
   _subtractFromCart,
   _removeFromCart,
   _addToUserCart,
 } from "../store/cart";
+
 //import singleProduct from "../store/singleProduct";
 //import { fetchCart, fetchGuestCart, _saveGuestCart } from "../store/cart";
 
@@ -24,7 +26,6 @@ class Cart extends Component {
   //   }
   render() {
     const cartItems = this.props.cart.cartItems || [];
-    console.log("this.props", this.props);
     return (
       <div className="cart">
         <h1>Shopping Cart</h1>
@@ -73,12 +74,15 @@ class Cart extends Component {
           .00
         </strong>
         <div className="row">
+          <Link to="/">
+            <button>Continue shopping</button>
+          </Link>
           <button className="tiny secondary" id="clear">
             Clear the cart
           </button>
-          <button className="tiny disabled" title="Work in progress">
-            Checkout
-          </button>
+          <Link to="/checkout">
+            <button>Proceed to checkout</button>
+          </Link>
         </div>
       </div>
     );
@@ -86,7 +90,6 @@ class Cart extends Component {
 }
 
 const mapState = (state) => {
-  console.log("Cart state in mapState: ", state);
   return {
     cart: state.cart,
     product: state.singleProduct,
