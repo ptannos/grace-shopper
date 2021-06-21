@@ -34,7 +34,7 @@ router.get("/:id", async (req, res, next) => {
 router.put("/", async (req, res, next) => {
   try {
     // grab cartItems from req.body
-    const products = req.body.cartItems || [];
+    const products = req.body.products || [];
     if (req.user) {
       const order = await Order.findCartOrder(req.user.id);
       console.log("THIS IS ORDER FOR REQ.USER >>>>> ", order);

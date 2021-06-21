@@ -24,7 +24,7 @@ class Routes extends Component {
     return (
       <div>
         {isLoggedIn ? (
-          <Route path="/" />
+          <Redirect to="/" />
         ) : (
           <Switch>
             <Route path="/login" component={Login} />

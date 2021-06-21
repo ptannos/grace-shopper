@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-//import { createOrder } from thunk
+import { _createOrder } from "../store/order";
+import { _clearCart } from "../store/cart";
 
 class Checkout extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class Checkout extends Component {
       }, 0),
       recipient: "",
       shippingAddress: "",
-      status: "cart",
+      status: "purchased",
       products: this.props.cart.cartItems,
     };
 
@@ -32,12 +33,12 @@ class Checkout extends Component {
   handleSubmit(event) {
     console.log("Checkout state in handleSubmit: ", this.state);
     event.preventDefault();
-    this.props.createNewOrder({ ...this.state });
+    this.props.createNewOrder(this.state);
+    this.props.clearCart();
   }
 
   render() {
     const cartItems = this.props.cart.cartItems || [];
-    console.log("this.props.cart", this.props.cart);
 
     const totalPrice = cartItems.reduce((total, item) => {
       return item.subtotal + total;
@@ -98,9 +99,7 @@ class Checkout extends Component {
                     <Link to="/cart">
                       <button>Back To Cart</button>
                     </Link>
-                    <Link to="/confirmation">
-                      <button type="submit">Place your order</button>
-                    </Link>
+                    <button type="submit">Place your order</button>
                   </div>
                 </div>
               </form>
@@ -120,14 +119,14 @@ class Checkout extends Component {
 }
 
 const mapState = (state) => {
-  console.log("Checkout state in mapState: ", state);
   return {
     cart: state.cart,
   };
 };
 
-const mapDispatch = (dispatch) => ({
-  createNewOrder: (order) => dispatch(createOrder(order)),
+const mapDispatch = (dispatch, { history }) => ({
+  createNewOrder: (order) => dispatch(_createOrder(order, history)),
+  clearCart: () => dispatch(_clearCart()),
 });
 
 export default connect(mapState, mapDispatch)(Checkout);

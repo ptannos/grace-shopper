@@ -55,7 +55,7 @@ class Cart extends Component {
                   {item.count > 0 ? <button> - </button> : ""}
                 </td>
                 <td>{item.count}</td>
-                <td onClick={() => this.props.addUserCart(item)}>
+                <td onClick={() => this.props.addProduct(item)}>
                   {item.quantity > 0 ? <button> + </button> : ""}
                 </td>
                 <td onClick={() => this.props.deleteProduct(item)}>
@@ -102,7 +102,7 @@ const mapDispatch = (dispatch) => {
     deleteProduct: (product) => dispatch(_removeFromCart(product)),
     addProduct: (product) => dispatch(_addToCart(product)),
     removeSingleProduct: (product) => dispatch(_subtractFromCart(product)),
-    addUserCart: (product) => dispatch(_addToUserCart(product)),
+    //addUserCart: (product) => dispatch(_addToUserCart(product)),
   };
 };
 
