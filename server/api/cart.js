@@ -28,7 +28,7 @@ router.get("/", requireToken, async (req, res, next) => {
 });
 
 //This will add product to cart
-router.post("/", requireToken, async (req, res, next) => {
+router.put("/", requireToken, async (req, res, next) => {
   try {
     const order = await Order.findOne({
       where: {
@@ -37,17 +37,18 @@ router.post("/", requireToken, async (req, res, next) => {
       },
     });
     if (!order) {
-      const newOrder = await Order.create(req.body)
+      const newOrder = await Order.create(req.body);
+
+      const newOrderedItems = await OrderedItem.create(req.body.cartItems);
       res.send(newOrder);
     } else {
-      next()
+      next();
     }
   } catch (err) {
-    next(err)
+    next(err);
   }
-})
+});
 
-//This will update the cart with more products
 // router.put("/", requireToken, async (req, res, next) => {
 //   try {
 
@@ -68,12 +69,12 @@ router.delete("/:id", requireToken, async (req, res, next) => {
     const product = await OrderedItem.findOne({
       where: {
         orderId: order.id,
-        productId: req.params.id
-      }
-    })
-    await product.destroy()
-    res.send(product)
+        productId: req.params.id,
+      },
+    });
+    await product.destroy();
+    res.send(product);
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});

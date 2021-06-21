@@ -1,24 +1,55 @@
-const Sequelize = require('sequelize')
-const db = require('../db')
+const Sequelize = require("sequelize");
+const db = require("../db");
 
-const Order = db.define('order', {
+const Order = db.define("order", {
   totalPrice: {
     type: Sequelize.INTEGER,
-    allowNull: false
+    allowNull: false,
   },
   totalQty: {
     type: Sequelize.INTEGER,
     allowNull: false,
   },
+  recipient: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
   shippingAddress: {
     type: Sequelize.TEXT,
-    allowNull: false
+    allowNull: false,
   },
   status: {
-    type: Sequelize.ENUM('cart', 'cancelled', 'purchased', 'shipped', 'delivered'),
+    type: Sequelize.ENUM(
+      "cart",
+      "cancelled",
+      "purchased",
+      "shipped",
+      "delivered"
+    ),
     allowNull: false,
-    defaultValue: 'cart'
+    defaultValue: "cart",
   },
-})
+});
 
-module.exports = Order
+// Find order of a user w/ "cart" status
+Order.findCartOrder = async function (reqId) {
+  return await Order.findOne({
+    where: {
+      userId: reqId,
+      status: "cart",
+    },
+  });
+};
+
+Order.prototype.addProductsToOrder = function (products) {
+  products.forEach(async (item) => {
+    await this.addProduct(item.id, {
+      through: {
+        itemQty: item.count,
+        itemPrice: item.subtotal,
+      },
+    });
+  });
+};
+
+module.exports = Order;
