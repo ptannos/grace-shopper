@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 class SingleProduct extends React.Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this)
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -15,11 +15,11 @@ class SingleProduct extends React.Component {
   }
 
   handleClick() {
-    this.props.addProduct(this.props.product)
+    this.props.addProduct(this.props.product);
+    alert("Added to cart!");
   }
 
   render() {
-
     const product = this.props.product || {};
     console.log("PRODUCT", product);
     return (
@@ -31,14 +31,17 @@ class SingleProduct extends React.Component {
         </p>
         <p>${product.price}.00</p>
         <p>{product.description}</p>
-        {product.quantity > 0 ? <button onClick={() => this.handleClick()}> Add to Cart</button> : "Sold Out"}
+        {product.quantity > 0 ? (
+          <button onClick={() => this.handleClick()}> Add to Cart</button>
+        ) : (
+          "Sold Out"
+        )}
       </div>
     );
   }
 }
 
 const mapState = (state) => {
-  console.log("THIS IS STATE", state);
   return {
     product: state.singleProduct,
   };
@@ -48,7 +51,7 @@ const mapDispatch = (dispatch) => {
   return {
     loadSingleProduct: (id) => dispatch(fetchSingleProduct(id)),
     addProduct: (product) => dispatch(_addToCart(product)),
-    removeProduct: (product) => dispatch(_removeFromCart(product))
+    removeProduct: (product) => dispatch(_removeFromCart(product)),
   };
 };
 

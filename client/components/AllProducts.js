@@ -15,7 +15,6 @@ class AllProducts extends React.Component {
 
   render() {
     const products = this.props.products || [];
-    console.log("PRODUCTS", products);
     return (
       <div className="product-container">
         {products.map((product) => {
@@ -37,7 +36,6 @@ class AllProducts extends React.Component {
 }
 
 const mapState = (state) => {
-  console.log("THIS IS STATE", state);
   return {
     products: state.allProducts,
   };
