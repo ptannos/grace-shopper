@@ -24,7 +24,6 @@ class Checkout extends Component {
   }
 
   handleChange(event) {
-    console.log("Checkout state in handleChange: ", this.state);
     this.setState({
       [event.target.name]: event.target.value,
     });
