@@ -24,7 +24,6 @@ class AllProducts extends React.Component {
   render() {
     const products = this.props.products || [];
     const { isAdmin } = this.props;
-    console.log("props in AllProducts", this.props);
     return (
       <div className="product-container">
         {products.map((product) => {
@@ -57,7 +56,6 @@ class AllProducts extends React.Component {
 }
 
 const mapState = (state) => {
-  console.log("state in AllProducts", state);
   return {
     products: state.allProducts,
     isAdmin: state.auth.isAdmin,

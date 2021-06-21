@@ -36,7 +36,7 @@ router.post("/", requireToken, isAdmin, async (req, res, next) => {
 });
 
 //PUT single product
-router.put("/:id", requireToken, isAdmin, async (req, res, next) => {
+router.put("/:id", async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id);
     const updatedProduct = await product.update(req.body);

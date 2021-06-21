@@ -30,8 +30,11 @@ export const fetchSingleProduct = (id) => {
 export const updateProduct = (product) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`/api/products/${product.id}`, product);
-      dispatch(updateSingleProduct(data));
+      const { data: updated } = await axios.put(
+        `/api/products/${product.id}`,
+        product
+      );
+      dispatch(updateSingleProduct(updated));
     } catch (err) {
       console.log(err);
     }

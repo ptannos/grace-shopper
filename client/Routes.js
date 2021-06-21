@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import AllProducts from "./components/AllProducts";
 import SingleProduct from "./components/SingleProduct";
-import CreateProduct from "./components/CreateProduct"
+import CreateProduct from "./components/CreateProduct";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
 import Confirmation from "./components/Confirmation";
@@ -21,7 +21,6 @@ class Routes extends Component {
 
   render() {
     const { isLoggedIn, isAdmin } = this.props;
-    console.log("this.props!", this.props);
     return (
       <div>
         {isLoggedIn ? (
