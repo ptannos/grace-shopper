@@ -24,7 +24,7 @@ class Routes extends Component {
     return (
       <div>
         {isLoggedIn ? (
-          <Redirect path="/" />
+          <Redirect to="/" />
         ) : (
           <Switch>
             <Route path="/login" component={Login} />
@@ -34,14 +34,19 @@ class Routes extends Component {
         {isAdmin ? (
           <Switch>
             <Route path="/users" component={AllUsers} />
-            {/* <Route exact path="/products/create" component={CreateProduct} /> */}
+            <Route exact path="/products/create" component={CreateProduct} />
           </Switch>
         ) : (
-          <Route path="/users">This page is for our eyes only.</Route>
+          <Switch>
+            <Route path="/users">This page is for our eyes only.</Route>
+            <Route path="/products/create">
+              This page is for our eyes only.
+            </Route>
+          </Switch>
         )}
         <Switch>
           <Route exact path="/" component={AllProducts} />
-          <Route exact path="/products/create" component={CreateProduct} />
+          {/* <Route exact path="/products/create" component={CreateProduct} /> */}
           <Route exact path="/products/:id" component={SingleProduct} />
           <Route exact path="/cart" component={Cart} />
           <Route exact path="/checkout" component={Checkout} />
