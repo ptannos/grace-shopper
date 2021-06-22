@@ -127,7 +127,7 @@ const mapDispatch = (dispatch) => {
   return {
     loadSingleProduct: (id) => dispatch(fetchSingleProduct(id)),
     addGuestProduct: (product) => dispatch(_addToCart(product)),
-    addUserProduct: (product) => dispatch(_addToUserCart(product))
+    addUserProduct: (product) => dispatch(_addToUserCart(product)),
     addProduct: (product) => dispatch(_addToCart(product)),
     removeProduct: (product) => dispatch(_removeFromCart(product)),
     editProduct: (id) => dispatch(updateProduct(id)),
