@@ -23,17 +23,7 @@ const isAdmin = (req, res, next) => {
   }
 };
 
-// const isUser = (req, res, next) => {
-//   if (req.user) {
-//     res.send(req.user);
-//   } else {
-//     // if my users IS an admin, pass them forward!
-//     next();
-//   }
-// };
-
 module.exports = {
   requireToken,
   isAdmin,
-  //isUser,
 };

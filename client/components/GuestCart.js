@@ -1,24 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import {_addToUserCart, _subtractFromUserCart, _loadUserCart} from "../store/cartUser"
 import { _addToCart, _removeFromCart, _subtractFromCart } from '../store/cartGuest';
 
-class Cart extends Component {
+class GuestCart extends Component {
   constructor(props) {
     super(props);
   }
 
-  componentDidMount() {
-    if (this.props.isLoggedIn) this.props.getUserCart();
-  }
-
   render() {
-    const { name } = this.props
     const cartItems = this.props.cart || [];
 
     return (
-      <div className="cart" name={name}>
+      <div className="cart">
         <h1>Shopping Cart</h1>
         <table>
           <tbody>
@@ -81,15 +75,7 @@ class Cart extends Component {
 
 const mapGuest = (state) => {
   return {
-    name: "guest",
     cart: state.cartGuest
-  }
-}
-
-const mapUser = (state) => {
-  return {
-    name: "user",
-    cart: state.cartUser
   }
 }
 
@@ -101,31 +87,5 @@ const mapGuestDispatch = (dispatch) => {
   }
 }
 
-const mapUserDispatch = (dispatch) => {
-  return {
-    getUserCart: () => dispatch(_loadUserCart()),
-    removeSingleProduct: (product) => dispatch(_subtractFromUserCart(product)),
-    deleteProduct: (product) => dispatch(_subtractFromUserCart(product)),
-    addProduct: (product) => dispatch(_addToUserCart(product))
-  }
-}
-// const mapState = (state) => {
-//   return {
-//     userCart: state.userCart,
-//     guestCart: state.guestCart,
-//     isLoggedIn: !!state.auth.id,
-//   };
-// };
-
-// const mapDispatch = (dispatch) => {
-//   return {
-//     deleteProduct: (product) => dispatch(_removeFromCart(product)),
-//     addProduct: (product) => dispatch(_addToCart(product)),
-//     removeSingleProduct: (product) => dispatch(_subtractFromCart(product)),
-//     getUserCart: () => dispatch(_loadUserCart()),
-//   };
-// };
-
 // export default connect(mapState, mapDispatch)(Cart);
-export const GuestCart = connect(mapGuest, mapGuestDispatch)(Cart)
-export const UserCart = connect(mapUser, mapUserDispatch)(Cart)
+export default connect(mapGuest, mapGuestDispatch)(GuestCart)

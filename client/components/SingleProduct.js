@@ -1,6 +1,8 @@
 import React from "react";
 import { fetchSingleProduct } from "../store/singleProduct";
-import { _addToCart, _removeFromCart } from "../store/cart";
+//import { _addToCart, _removeFromCart } from "../store/cart";
+import { _addToCart } from "../store/cartGuest"
+import { _addToUserCart } from '../store/cartUser';
 import { connect } from "react-redux";
 
 class SingleProduct extends React.Component {
@@ -15,8 +17,13 @@ class SingleProduct extends React.Component {
   }
 
   handleClick() {
-    this.props.addProduct(this.props.product);
-    alert("Added to cart!");
+    const product = this.props.product
+    if (!this.props.isLoggedIn) {
+      this.props.addGuestProduct(product)
+    } else {
+      this.props.addUserProduct(product);
+    }
+    //alert("Added to cart!");
   }
 
   render() {
@@ -44,14 +51,15 @@ class SingleProduct extends React.Component {
 const mapState = (state) => {
   return {
     product: state.singleProduct,
+    isLoggedIn: !!state.auth.id
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
     loadSingleProduct: (id) => dispatch(fetchSingleProduct(id)),
-    addProduct: (product) => dispatch(_addToCart(product)),
-    removeProduct: (product) => dispatch(_removeFromCart(product)),
+    addGuestProduct: (product) => dispatch(_addToCart(product)),
+    addUserProduct: (product) => dispatch(_addToUserCart(product))
   };
 };
 

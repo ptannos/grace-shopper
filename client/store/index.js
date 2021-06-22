@@ -5,7 +5,8 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import auth from "./auth";
 import singleProduct from "./singleProduct";
 import allProducts from "./allProducts";
-import cart from "./cart";
+import cartGuest from "./cartGuest";
+import cartUser from "./cartUser"
 import order from "./order";
 import allUsers from "./allUsers";
 
@@ -13,7 +14,8 @@ const reducer = combineReducers({
   auth,
   singleProduct,
   allProducts,
-  cart,
+  cartGuest,
+  cartUser,
   order,
   allUsers,
 });

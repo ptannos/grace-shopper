@@ -3,7 +3,11 @@ import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import AllProducts from "./components/AllProducts";
 import SingleProduct from "./components/SingleProduct";
-import Cart from "./components/Cart";
+//import Cart from "./components/Cart";
+//import { GuestCart, UserCart } from './components/Cart';
+import GuestCart from './components/GuestCart';
+import UserCart from './components/UserCart'
+
 import Checkout from "./components/Checkout";
 import Confirmation from "./components/Confirmation";
 import AllUsers from "./components/AllUsers";
@@ -20,15 +24,18 @@ class Routes extends Component {
 
   render() {
     const { isLoggedIn, isAdmin } = this.props;
-    console.log("this.props!", this.props);
     return (
       <div>
         {isLoggedIn ? (
-          <Redirect to="/" />
+          <Switch>
+            {/* <Redirect to="/" /> */}
+            <Route path="/cart" component={UserCart}></Route>
+          </Switch>
         ) : (
           <Switch>
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
+            <Route path="/cart" component={GuestCart} />
           </Switch>
         )}
         {isAdmin ? (
@@ -39,7 +46,6 @@ class Routes extends Component {
         <Switch>
           <Route exact path="/" component={AllProducts} />
           <Route path="/products/:id" component={SingleProduct} />
-          <Route exact path="/cart" component={Cart} />
           <Route exact path="/checkout" component={Checkout} />
           <Route path="/confirmation" component={Confirmation} />
         </Switch>
