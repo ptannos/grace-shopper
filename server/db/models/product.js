@@ -25,14 +25,23 @@ const Product = db.define("product", {
   prepTime: {
     type: Sequelize.DECIMAL(10, 1),
     allowNull: false,
+    validate: {
+      min: 0
+    }
   },
   quantity: {
     type: Sequelize.INTEGER,
     allowNull: false,
+    validate: {
+      min: 0
+    }
   },
   price: {
     type: Sequelize.INTEGER,
     allowNull: false,
+    validate: {
+      min: 0
+    }
   },
   country: {
     type: Sequelize.STRING,
