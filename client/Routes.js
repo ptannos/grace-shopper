@@ -6,6 +6,7 @@ import SingleProduct from "./components/SingleProduct";
 import GuestCart from './components/GuestCart';
 import UserCart from './components/UserCart'
 import CreateProduct from "./components/CreateProduct";
+import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
 import Confirmation from "./components/Confirmation";
 import AllUsers from "./components/AllUsers";
