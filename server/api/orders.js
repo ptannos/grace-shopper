@@ -37,9 +37,8 @@ router.put("/", async (req, res, next) => {
     const products = req.body.products || [];
     if (req.user) {
       const order = await Order.findCartOrder(req.user.id);
-      console.log("THIS IS ORDER FOR REQ.USER >>>>> ", order);
       await order.update(req.body);
-      await order.addProductsToOrder(products);
+      //await order.addProductsToOrder(products);
       res.send(order);
     } else {
       const newOrder = await Order.create(req.body);
@@ -50,39 +49,3 @@ router.put("/", async (req, res, next) => {
     next(err);
   }
 });
-
-// PUT in a new order to purchase
-// router.put("/", async (req, res, next) => {
-//   try {
-//     const order = await Order.create(req.body);
-//     res.send(order);
-//     // let order = await Order.findOne({
-//     //   where: {
-//     //     userId: req.user.id,
-//     //   },
-//     // });
-//     // if (order) {
-//     //   order.status = "purchased"
-//     // } else {
-//     //   const {  } = req.body
-//     //   const newOrder = await Order.create({
-
-//     //   });
-
-//     //}
-//   } catch (err) {
-//     next(err);
-//   }
-// });
-
-/*
-req.body:
-{
-  totalPrice: 50
-  totalQty: 3
-  recipient: "Grace Hopper"
-  shippingAddress: "123 ABC St"
-  status: "purchased"
-  products: [...cartItems]
-}
-*/

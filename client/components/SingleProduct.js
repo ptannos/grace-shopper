@@ -1,7 +1,8 @@
 import React from "react";
 import { fetchSingleProduct } from "../store/singleProduct";
+import { _addToCart } from "../store/cartGuest"
+import { _addToUserCart } from '../store/cartUser';
 import { updateProduct } from "../store/singleProduct";
-import { _addToCart, _removeFromCart } from "../store/cart";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -42,8 +43,13 @@ class SingleProduct extends React.Component {
   }
 
   handleClick() {
-    this.props.addProduct(this.props.product);
-    alert("Added to cart!");
+    const product = this.props.product
+    if (!this.props.isLoggedIn) {
+      this.props.addGuestProduct(product)
+    } else {
+      this.props.addUserProduct(product);
+    }
+    //alert("Added to cart!");
   }
 
   render() {
@@ -112,6 +118,7 @@ const mapState = (state) => {
   console.log("state in singleproduct", state);
   return {
     product: state.singleProduct,
+    isLoggedIn: !!state.auth.id,
     isAdmin: state.auth.isAdmin,
   };
 };
@@ -119,6 +126,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     loadSingleProduct: (id) => dispatch(fetchSingleProduct(id)),
+    addGuestProduct: (product) => dispatch(_addToCart(product)),
+    addUserProduct: (product) => dispatch(_addToUserCart(product))
     addProduct: (product) => dispatch(_addToCart(product)),
     removeProduct: (product) => dispatch(_removeFromCart(product)),
     editProduct: (id) => dispatch(updateProduct(id)),

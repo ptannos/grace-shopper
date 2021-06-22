@@ -1,5 +1,3 @@
-import axios from "axios";
-
 //Constants
 const ADD_TO_CART = "ADD_TO_CART";
 const SUBTRACT_FROM_CART = "SUBTRACT_FROM_CART";
@@ -28,7 +26,7 @@ const clearCart = () => ({
 
 //Thunks
 export const _addToCart = (product) => (dispatch, getState) => {
-  const cartItems = getState().cart.cartItems.slice();
+  const cartItems = getState().cartGuest.slice();
   let cartExists = false;
   cartItems.forEach((item) => {
     if (item.id === product.id) {
@@ -45,29 +43,11 @@ export const _addToCart = (product) => (dispatch, getState) => {
     });
   }
   dispatch(addToCart(cartItems));
-  localStorage.setItem("cartItems", JSON.stringify(cartItems));
-};
-
-export const _addToUserCart = (cartItems) => async (dispatch, getState) => {
-  try {
-    const userId = getState().auth.id;
-    const token = window.localStorage.getItem("token");
-
-    if (userId) {
-      const { data } = await axios.put("/api/cart", cartItems, {
-        headers: {
-          authorization: token,
-        },
-      });
-      dispatch(addToCart(data));
-    }
-  } catch (err) {
-    console.log(err);
-  }
+  localStorage.setItem("cart", JSON.stringify(cartItems));
 };
 
 export const _subtractFromCart = (product) => (dispatch, getState) => {
-  const cartItems = getState().cart.cartItems.slice();
+  const cartItems = getState().cartGuest.slice();
   cartItems.forEach((item) => {
     if (item.id === product.id) {
       item.count--;
@@ -75,36 +55,36 @@ export const _subtractFromCart = (product) => (dispatch, getState) => {
     }
   });
   dispatch(subtractFromCart(cartItems));
-  localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  localStorage.setItem("cart", JSON.stringify(cartItems));
 };
 
 export const _removeFromCart = (product) => (dispatch, getState) => {
   const cartItems = getState()
-    .cart.cartItems.slice()
+    .cartGuest.slice()
     .filter((item) => item.id !== product.id);
   dispatch(removeFromCart(cartItems));
-  localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  localStorage.setItem("cart", JSON.stringify(cartItems));
 };
 
 export const _clearCart = () => (dispatch) => {
   dispatch(clearCart());
-  localStorage.clear("cartItems");
+  localStorage.clear("cart");
 };
 
 //Reducer
 export default function (
-  state = { cartItems: JSON.parse(localStorage.getItem("cartItems") || "[]") },
+  state = JSON.parse(localStorage.getItem("cart")) || [],
   action
 ) {
   switch (action.type) {
     case ADD_TO_CART:
-      return { cartItems: action.cartItems };
+      return action.cartItems;
     case SUBTRACT_FROM_CART:
-      return { cartItems: action.cartItems };
+      return action.cartItems;
     case REMOVE_FROM_CART:
-      return { cartItems: action.cartItems };
+      return action.cartItems;
     case CLEAR_CART:
-      return { cartItems: [] };
+      return [];
     default:
       return state;
   }

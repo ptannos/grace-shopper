@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
+const Product = require("./product");
 
 const Order = db.define("order", {
   totalPrice: {
@@ -38,6 +39,7 @@ Order.findCartOrder = async function (reqId) {
       userId: reqId,
       status: "cart",
     },
+    include: [{ model: Product }],
   });
 };
 

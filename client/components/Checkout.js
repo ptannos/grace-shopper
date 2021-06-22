@@ -2,22 +2,22 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { _createOrder } from "../store/order";
-import { _clearCart } from "../store/cart";
+import { _clearCart } from "../store/cartGuest";
 
 class Checkout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      totalPrice: this.props.cart.cartItems.reduce((total, item) => {
+      totalPrice: this.props.cart.reduce((total, item) => {
         return item.subtotal + total;
       }, 0),
-      totalQty: this.props.cart.cartItems.reduce((total, item) => {
+      totalQty: this.props.cart.reduce((total, item) => {
         return item.count + total;
       }, 0),
       recipient: "",
       shippingAddress: "",
       status: "purchased",
-      products: this.props.cart.cartItems,
+      products: this.props.cart,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -38,7 +38,7 @@ class Checkout extends Component {
   }
 
   render() {
-    const cartItems = this.props.cart.cartItems || [];
+    const cartItems = this.props.cart || [];
 
     const totalPrice = cartItems.reduce((total, item) => {
       return item.subtotal + total;
@@ -120,7 +120,7 @@ class Checkout extends Component {
 
 const mapState = (state) => {
   return {
-    cart: state.cart,
+    cart: state.cartUser,
   };
 };
 
