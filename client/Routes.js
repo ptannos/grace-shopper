@@ -23,6 +23,20 @@ class Routes extends Component {
     const { isLoggedIn, isAdmin } = this.props;
     return (
       <div>
+
+        {isAdmin ? (
+          <Switch>
+            <Route path="/users" component={AllUsers} />
+            {/* <Route exact path="/products/create" component={CreateProduct} /> */}
+          </Switch>
+        ) : (
+          <Switch>
+            <Route path="/users">This page is for our eyes only.</Route>
+            {/* <Route exact path="/products/create">
+              This page is for our eyes only.
+            </Route> */}
+          </Switch>
+        )}
         {isLoggedIn ? (
           <Redirect to="/" />
         ) : (
@@ -31,22 +45,10 @@ class Routes extends Component {
             <Route path="/signup" component={Signup} />
           </Switch>
         )}
-        {isAdmin ? (
-          <Switch>
-            <Route path="/users" component={AllUsers} />
-            <Route exact path="/products/create" component={CreateProduct} />
-          </Switch>
-        ) : (
-          <Switch>
-            <Route path="/users">This page is for our eyes only.</Route>
-            <Route path="/products/create">
-              This page is for our eyes only.
-            </Route>
-          </Switch>
-        )}
+
         <Switch>
           <Route exact path="/" component={AllProducts} />
-          {/* <Route exact path="/products/create" component={CreateProduct} /> */}
+          <Route exact path="/products/create" component={CreateProduct} />
           <Route exact path="/products/:id" component={SingleProduct} />
           <Route exact path="/cart" component={Cart} />
           <Route exact path="/checkout" component={Checkout} />
