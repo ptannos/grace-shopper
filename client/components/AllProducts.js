@@ -1,10 +1,14 @@
 import React from "react";
-import { fetchAllProducts } from "../store/allProducts";
+import { fetchAllProducts, deleteProduct } from "../store/allProducts";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "react-dom";
 
 class AllProducts extends React.Component {
+  constructor() {
+    super();
+    this.handleDelete = this.handleDelete.bind(this);
+  }
   componentDidMount() {
     try {
       this.props.loadProducts();
@@ -13,8 +17,13 @@ class AllProducts extends React.Component {
     }
   }
 
+  handleDelete(id) {
+    this.props.removeProduct(id);
+  }
+
   render() {
     const products = this.props.products || [];
+    const { isAdmin } = this.props;
     return (
       <div className="product-container">
         {products.map((product) => {
@@ -28,6 +37,15 @@ class AllProducts extends React.Component {
                 <p>
                   {product.prepTime} {product.prepTime > 1 ? "hours" : "hour"}
                 </p>
+                {isAdmin ? (
+                  <div>
+                    <button onClick={() => this.handleDelete(product.id)}>
+                      Delete
+                    </button>
+                  </div>
+                ) : (
+                  <div></div>
+                )}
               </div>
             </div>
           );
@@ -40,12 +58,14 @@ class AllProducts extends React.Component {
 const mapState = (state) => {
   return {
     products: state.allProducts,
+    isAdmin: state.auth.isAdmin,
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
     loadProducts: () => dispatch(fetchAllProducts()),
+    removeProduct: (id) => dispatch(deleteProduct(id)),
   };
 };
 

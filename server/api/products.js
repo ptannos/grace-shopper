@@ -3,7 +3,7 @@ const {
   models: { Product },
 } = require("../db");
 module.exports = router;
-const { isAdmin } = require("./gatekeepingMiddleware");
+const { isAdmin, requireToken } = require("./gatekeepingMiddleware");
 
 //GET all products
 router.get("/", async (req, res, next) => {
@@ -26,7 +26,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 //POST single product
-router.post("/", isAdmin, async (req, res, next) => {
+router.post("/", requireToken, isAdmin, async (req, res, next) => {
   try {
     const newProduct = await Product.create(req.body);
     res.send(newProduct);
@@ -36,7 +36,7 @@ router.post("/", isAdmin, async (req, res, next) => {
 });
 
 //PUT single product
-router.put("/:id", isAdmin, async (req, res, next) => {
+router.put("/:id", async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id);
     const updatedProduct = await product.update(req.body);
@@ -47,7 +47,7 @@ router.put("/:id", isAdmin, async (req, res, next) => {
 });
 
 //DELETE single product
-router.delete("/:id", isAdmin, async (req, res, next) => {
+router.delete("/:id", requireToken, isAdmin, async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id);
     await product.destroy();

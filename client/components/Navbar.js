@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Home from "./Home";
 import { logout } from "../store";
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
+const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
   <div>
     <h1>Plate Hopper</h1>
     <Home />
@@ -25,6 +25,14 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
           <Link to="/signup">Sign Up</Link>
         </div>
       )}
+      {isAdmin ? (
+        <div>
+          <Link to="/products/create">Add New Product</Link>
+          <Link to="/users">View All Users</Link>
+        </div>
+      ) : (
+        ""
+      )}
     </nav>
     <hr />
   </div>
@@ -34,8 +42,10 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
  * CONTAINER
  */
 const mapState = (state) => {
+  console.log("NAVBAR STATE", state);
   return {
     isLoggedIn: !!state.auth.id,
+    isAdmin: state.auth.isAdmin,
   };
 };
 
@@ -48,3 +58,12 @@ const mapDispatch = (dispatch) => {
 };
 
 export default connect(mapState, mapDispatch)(Navbar);
+
+// {isAdmin ? (
+//   <div>
+//     <Link to="/products/create">Add New Product</Link>
+//     <Link to="/users">View All Users</Link>
+//   </div>
+// ) : (
+//   <div>''</div>
+// )}
