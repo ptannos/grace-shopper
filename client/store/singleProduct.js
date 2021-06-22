@@ -1,4 +1,5 @@
 import axios from "axios";
+const TOKEN = 'token';
 
 //action type
 const GET_SINGLE_PRODUCT = "GET_SINGLE_PRODUCT";
@@ -30,8 +31,18 @@ export const fetchSingleProduct = (id) => {
 export const updateProduct = (product) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`/api/products/${product.id}`, product);
-      dispatch(updateSingleProduct(data));
+      const token = window.localStorage.getItem(TOKEN);
+      if (token) {
+        const { data: updated } = await axios.put(
+          `/api/products/${product.id}`,
+          product, {
+            headers: {
+              authorization: token
+            }
+          }
+        );
+        dispatch(updateSingleProduct(updated));
+      }
     } catch (err) {
       console.log(err);
     }

@@ -3,11 +3,10 @@ import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import AllProducts from "./components/AllProducts";
 import SingleProduct from "./components/SingleProduct";
-//import Cart from "./components/Cart";
-//import { GuestCart, UserCart } from './components/Cart';
 import GuestCart from './components/GuestCart';
 import UserCart from './components/UserCart'
-
+import CreateProduct from "./components/CreateProduct";
+import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
 import Confirmation from "./components/Confirmation";
 import AllUsers from "./components/AllUsers";
@@ -26,6 +25,20 @@ class Routes extends Component {
     const { isLoggedIn, isAdmin } = this.props;
     return (
       <div>
+
+        {isAdmin ? (
+          <Switch>
+            <Route path="/users" component={AllUsers} />
+            {/* <Route exact path="/products/create" component={CreateProduct} /> */}
+          </Switch>
+        ) : (
+          <Switch>
+            <Route path="/users">This page is for our eyes only.</Route>
+            {/* <Route exact path="/products/create">
+              This page is for our eyes only.
+            </Route> */}
+          </Switch>
+        )}
         {isLoggedIn ? (
           <Switch>
             {/* <Redirect to="/" /> */}
@@ -38,14 +51,12 @@ class Routes extends Component {
             <Route path="/cart" component={GuestCart} />
           </Switch>
         )}
-        {isAdmin ? (
-          <Route path="/users" component={AllUsers} />
-        ) : (
-          <Route path="/users">This page is for our eyes only.</Route>
-        )}
+
         <Switch>
           <Route exact path="/" component={AllProducts} />
-          <Route path="/products/:id" component={SingleProduct} />
+          <Route exact path="/products/create" component={CreateProduct} />
+          <Route exact path="/products/:id" component={SingleProduct} />
+          <Route exact path="/cart" component={Cart} />
           <Route exact path="/checkout" component={Checkout} />
           <Route path="/confirmation" component={Confirmation} />
         </Switch>
