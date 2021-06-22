@@ -5,27 +5,42 @@ import {
   _addToCart,
   _subtractFromCart,
   _removeFromCart,
-  _addToUserCart,
+  _loadUserCart,
+  _saveUserCart,
 } from "../store/cart";
 
-//import singleProduct from "../store/singleProduct";
-//import { fetchCart, fetchGuestCart, _saveGuestCart } from "../store/cart";
-
 class Cart extends Component {
-  constructor() {
-    super();
-    // this.handleClick = this.handleClick.bind(this);
+  constructor(props) {
+    super(props);
+    this.state = {
+      cart: [],
+    };
   }
-  //   handleClick(event) {
-  //     console.log(event.target);
-  //     this.props.addProduct();
-  //     const cartItems = window.localStorage.getItem("cartItems");
-  //     if (this.props.isLoggedIn) {
-  //       this.props.addUserCart(cartItems);
-  //     }
+
+  componentDidMount() {
+    //if (this.props.isLoggedIn) this.props.getUserCart();
+    this.setState((state, props) => ({
+      cart: this.props.isLoggedIn
+        ? props.getUserCart()
+        : this.props.cart.cartItems,
+    }));
+  }
+
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.isLoggedIn !== prevProps.isLoggedIn) {
+  //     this.props.getUserCart();
   //   }
+  // }
+
   render() {
-    const cartItems = this.props.cart.cartItems || [];
+    const cartItems =
+      JSON.parse(window.localStorage.getItem("cartItems")) || [];
+    //const cartItems = this.state.cart || [];
+    //const cartItems = this.props.cart.cartItems;
+    // const cartItems = this.props.isLoggedIn
+    //   ? this.props.loadUserCart()
+    //   : this.props.cart.cartItems;
+
     return (
       <div className="cart">
         <h1>Shopping Cart</h1>
@@ -50,8 +65,7 @@ class Cart extends Component {
                     item.count <= 1
                       ? () => this.props.deleteProduct(item)
                       : () => this.props.removeSingleProduct(item)
-                  }
-                >
+                  }>
                   {item.count > 0 ? <button> - </button> : ""}
                 </td>
                 <td>{item.count}</td>
@@ -80,6 +94,13 @@ class Cart extends Component {
           <button className="tiny secondary" id="clear">
             Clear the cart
           </button>
+          {this.props.isLoggedIn ? (
+            <button onClick={() => this.props.saveUserCart(cartItems)}>
+              Save cart
+            </button>
+          ) : (
+            ""
+          )}
           <Link to="/checkout">
             <button>Proceed to checkout</button>
           </Link>
@@ -90,6 +111,7 @@ class Cart extends Component {
 }
 
 const mapState = (state) => {
+  //const userCart = this.props.isLoggedIn ? _loadUserCart() : state.cart;
   return {
     cart: state.cart,
     product: state.singleProduct,
@@ -102,7 +124,8 @@ const mapDispatch = (dispatch) => {
     deleteProduct: (product) => dispatch(_removeFromCart(product)),
     addProduct: (product) => dispatch(_addToCart(product)),
     removeSingleProduct: (product) => dispatch(_subtractFromCart(product)),
-    //addUserCart: (product) => dispatch(_addToUserCart(product)),
+    getUserCart: () => dispatch(_loadUserCart()),
+    saveUserCart: () => dispatch(_saveUserCart()),
   };
 };
 

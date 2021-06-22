@@ -1,80 +1,36 @@
 const router = require("express").Router();
 const Order = require("../db/models/order");
-const OrderedItem = require("../db/models/orderedItem");
-const { requireToken, isUser } = require("./gatekeepingMiddleware");
+const Product = require("../db/models/product");
+const { requireToken } = require("./gatekeepingMiddleware");
 
 module.exports = router;
 
-// GET api/cart
-
-// This will check for order status rather than order Id
+// GET api/cart - retrieve logged-in user's order with "cart" status
 router.get("/", requireToken, async (req, res, next) => {
   try {
-    const cart = await Order.findOne({
-      where: {
-        userId: req.user.id,
-        status: "cart",
-      },
-    });
-    const products = await OrderedItem.findAll({
-      where: {
-        orderId: cart.id,
-      },
-    });
-    res.send(products);
+    const cartOrder = await Order.findCartOrder(req.user.id);
+    res.send(cartOrder);
   } catch (err) {
     next(err);
   }
 });
 
-//This will add product to cart
+// PUT api/cart - saves logged-in user's order to db
 router.put("/", requireToken, async (req, res, next) => {
   try {
-    const order = await Order.findOne({
-      where: {
-        userId: req.user.id,
-        status: "cart",
-      },
-    });
-    if (!order) {
-      const newOrder = await Order.create(req.body);
-
-      const newOrderedItems = await OrderedItem.create(req.body.cartItems);
-      res.send(newOrder);
-    } else {
-      next();
-    }
+    console.log("REQ.BODY IN CART PUT ROUTE >>>>>>> ", req.body);
+    //const products = req.body.cartItems || [];
+    //const order = await Order.findCartOrder(req.user.id);
+    //console.log("ORDER IN PUT ROUTE: ", order);
+    // if (!order) {
+    //   const newCart = await Order.create(req.body);
+    //   await newCart.addProductsToOrder(products);
+    //   res.send(newCart);
+    // } else {
+    //   const updatedCart = await order.update(req.body, order);
+    //   res.send(updatedCart);
+    // }
   } catch (err) {
     next(err);
-  }
-});
-
-// router.put("/", requireToken, async (req, res, next) => {
-//   try {
-
-//   } catch (error) {
-
-//   }
-// })
-
-//This will delete items from the cart
-router.delete("/:id", requireToken, async (req, res, next) => {
-  try {
-    const order = await Order.findOne({
-      where: {
-        userId: req.user.id,
-        status: "cart",
-      },
-    });
-    const product = await OrderedItem.findOne({
-      where: {
-        orderId: order.id,
-        productId: req.params.id,
-      },
-    });
-    await product.destroy();
-    res.send(product);
-  } catch (error) {
-    next(error);
   }
 });

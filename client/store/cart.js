@@ -1,12 +1,20 @@
 import axios from "axios";
 
+const TOKEN = "token";
+
 //Constants
+const LOAD_USER_CART = "LOAD_USER_CART";
 const ADD_TO_CART = "ADD_TO_CART";
 const SUBTRACT_FROM_CART = "SUBTRACT_FROM_CART";
 const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 const CLEAR_CART = "CLEAR_CART";
 
 //Actions
+const loadUserCart = (cartItems) => ({
+  type: LOAD_USER_CART,
+  cartItems,
+});
+
 const addToCart = (cartItems) => ({
   type: ADD_TO_CART,
   cartItems,
@@ -27,6 +35,41 @@ const clearCart = () => ({
 });
 
 //Thunks
+export const _loadUserCart = () => async (dispatch) => {
+  try {
+    const token = window.localStorage.getItem(TOKEN);
+    const { data } = await axios.get("/api/cart", {
+      headers: {
+        authorization: token,
+      },
+    });
+    const products = data.products;
+    products.map((item) => {
+      item.count = item.orderedItem.itemQty;
+      item.subtotal = item.price * item.count;
+    });
+    dispatch(loadUserCart(products));
+    localStorage.setItem("cartItems", JSON.stringify(products));
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const _saveUserCart = (cartItems) => async (dispatch, getState) => {
+  try {
+    //const cart = getState().cart.cartItems.slice();
+    const token = window.localStorage.getItem(TOKEN);
+    await axios.put("/api/cart", {
+      headers: {
+        authorization: token,
+      },
+      body: cartItems,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const _addToCart = (product) => (dispatch, getState) => {
   const cartItems = getState().cart.cartItems.slice();
   let cartExists = false;
@@ -46,24 +89,6 @@ export const _addToCart = (product) => (dispatch, getState) => {
   }
   dispatch(addToCart(cartItems));
   localStorage.setItem("cartItems", JSON.stringify(cartItems));
-};
-
-export const _addToUserCart = (cartItems) => async (dispatch, getState) => {
-  try {
-    const userId = getState().auth.id;
-    const token = window.localStorage.getItem("token");
-
-    if (userId) {
-      const { data } = await axios.put("/api/cart", cartItems, {
-        headers: {
-          authorization: token,
-        },
-      });
-      dispatch(addToCart(data));
-    }
-  } catch (err) {
-    console.log(err);
-  }
 };
 
 export const _subtractFromCart = (product) => (dispatch, getState) => {
@@ -97,6 +122,8 @@ export default function (
   action
 ) {
   switch (action.type) {
+    case LOAD_USER_CART:
+      return { cartItems: action.cartItems };
     case ADD_TO_CART:
       return { cartItems: action.cartItems };
     case SUBTRACT_FROM_CART:

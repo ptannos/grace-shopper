@@ -41,6 +41,7 @@ export const authenticate =
 
 export const logout = () => {
   window.localStorage.removeItem(TOKEN);
+  window.localStorage.clear("cartItems");
   history.push("/");
   return {
     type: SET_AUTH,
