@@ -32,6 +32,7 @@ class CreateProduct extends React.Component {
 
   render() {
     const { handleChange, handleSubmit } = this;
+    const { isAdmin } = this.props
     const {
       name,
       description,
@@ -43,7 +44,8 @@ class CreateProduct extends React.Component {
     } = this.state;
     return (
       <>
-        <form id='product-form' onSubmit={handleSubmit}>
+        {isAdmin ? (
+          <form id='product-form' onSubmit={handleSubmit}>
 
           <h2>Add Product</h2>
 
@@ -69,17 +71,27 @@ class CreateProduct extends React.Component {
           <input name='country' onChange={handleChange} value={country} />
           <p>
           <button type='submit'>Submit</button>
-          <Link to='/products'>Cancel</Link>
+          <Link to='/'>Cancel</Link>
           </p>
         </form>
+        ): (
+          <div>This page is for our eyes only!</div>
+        )}
+
       </>
     );
   }
 }
+
+const mapState = (state) => {
+  return {
+    isAdmin: state.auth.isAdmin,
+  };
+};
 
 const mapDispatchToProps = (dispatch, {history}) => {
   return {
     addProduct: (product) => dispatch(createProduct(product, history)),
   };
 };
-export default connect(null, mapDispatchToProps)(CreateProduct);
+export default connect(mapState, mapDispatchToProps)(CreateProduct);
