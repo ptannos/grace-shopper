@@ -1,5 +1,7 @@
 const router = require("express").Router()
-const Order = require("../db/models/order")
+const {
+  models: { Order },
+} = require("../db")
 const OrderedItem = require("../db/models/orderedItem")
 const { requireToken } = require("./gatekeepingMiddleware")
 
@@ -42,14 +44,7 @@ router.put("/products/add", requireToken, async (req, res, next) => {
         res.send(product)
       }
     } else {
-      const newCart = await Order.create({
-        totalPrice: price,
-        totalQty: 1,
-        recipient: "",
-        shippingAddress: "",
-        status: "cart",
-        userId: req.user.id,
-      })
+      const newCart = await Order.createNewCart(price, req.user.id)
       await newCart.addProductToOrder(id, price)
       res.send(newCart.product)
     }
@@ -61,12 +56,13 @@ router.put("/products/add", requireToken, async (req, res, next) => {
 // PUT /api/cart/products/remove - decrement or remove product in cart
 router.put("/products/remove", requireToken, async (req, res, next) => {
   try {
-    const { id } = req.body
+    const { id, price } = req.body
     const cart = await Order.findCartOrder(req.user.id)
     if (cart) {
+      await cart.decrement({ totalQty: 1, totalPrice: price })
       const product = await OrderedItem.findProductRow(cart.id, id)
       if (product.itemQty > 1) {
-        await product.decrement({ itemQty: 1 })
+        await product.decrement({ itemQty: 1, itemPrice: price })
       } else await product.destroy()
       res.send(product)
     }
@@ -75,14 +71,17 @@ router.put("/products/remove", requireToken, async (req, res, next) => {
   }
 })
 
-// DELETE api/cart/products/:id - delete all the products in User cart
+// DELETE api/cart/products/:id - delete a product (row) in cart
 router.delete("/products/:id", requireToken, async (req, res, next) => {
   try {
     const cart = await Order.findCartOrder(req.user.id)
     if (cart) {
       const product = await OrderedItem.findProductRow(cart.id, req.params.id)
+      await cart.decrement({
+        totalQty: product.itemQty,
+        totalPrice: product.itemPrice,
+      })
       await product.destroy()
-      console.log("PRODUCT IN DELETE: ", product)
       res.send(product)
     }
   } catch (err) {
