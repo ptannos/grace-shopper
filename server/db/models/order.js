@@ -43,6 +43,18 @@ Order.findCartOrder = function (id) {
   });
 };
 
+//Find order history of a user
+Order.findUserOrder = function (id) {
+  return Order.findAll({
+    where: {
+      userId: id,
+      status: {
+        [Sequelize.Op.not]: "cart",
+      },
+    },
+  });
+};
+
 // Add single product to an order
 Order.prototype.addProductToOrder = function (productId, price) {
   return this.addProduct(productId, {
@@ -50,8 +62,8 @@ Order.prototype.addProductToOrder = function (productId, price) {
       itemQty: 1,
       itemPrice: price,
     },
-  })
-}
+  });
+};
 
 // Add an array of products to an order
 Order.prototype.addProductsToOrder = function (products) {

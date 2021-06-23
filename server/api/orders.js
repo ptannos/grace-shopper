@@ -17,6 +17,25 @@ router.get("/", requireToken, async (req, res, next) => {
   }
 });
 
+//GET /api/orders/user/:userId - user's order history
+router.get("/user/:userId", requireToken, async (req, res, next) => {
+  try {
+    // console.log(
+    //   "req.user.id and userId",
+    //   typeof req.user.id,
+    //   typeof req.params.userId
+    // );
+    // console.log("true or false", req.user.id === Number(req.params.userId));
+    // if (req.user.id === Number(req.params.userId)) {
+    const orders = await Order.findUserOrder(req.params.userId);
+    console.log(orders);
+    res.send(orders);
+    // }
+  } catch (err) {
+    next(err);
+  }
+});
+
 // GET /api/orders/:id - a specific order w/ all the products in the order
 router.get("/:id", requireToken, async (req, res, next) => {
   try {

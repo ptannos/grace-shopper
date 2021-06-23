@@ -9,6 +9,7 @@ import CreateProduct from "./components/CreateProduct";
 import { UserCheckout, GuestCheckout } from "./components/Checkout";
 import Confirmation from "./components/Confirmation";
 import AllUsers from "./components/AllUsers";
+import OrderHistory from "./components/OrderHistory";
 import { Login, Signup } from "./components/AuthForm";
 import { me } from "./store";
 
@@ -57,6 +58,7 @@ class Routes extends Component {
           <Route exact path="/products/create" component={CreateProduct} />
           <Route exact path="/products/:id" component={SingleProduct} />
           <Route path="/confirmation" component={Confirmation} />
+          <Route path="/orders/user/:userId" component={OrderHistory} />
         </Switch>
       </div>
     );
