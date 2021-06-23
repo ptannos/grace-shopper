@@ -40,7 +40,7 @@ class Routes extends Component {
         )}
         {isLoggedIn ? (
           <Switch>
-            <Redirect to="/" />
+            {/* <Redirect to="/" /> */}
             <Route path="/cart" component={UserCart}></Route>
             <Route path="/checkout" component={UserCheckout}></Route>
           </Switch>
