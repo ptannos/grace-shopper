@@ -9,9 +9,7 @@ import CreateProduct from "./components/CreateProduct";
 import { UserCheckout, GuestCheckout } from "./components/Checkout";
 import Confirmation from "./components/Confirmation";
 import AllUsers from "./components/AllUsers";
-
 import OrderHistory from "./components/OrderHistory";
-
 import SingleUser from "./components/SingleUser";
 
 import { Login, Signup } from "./components/AuthForm";

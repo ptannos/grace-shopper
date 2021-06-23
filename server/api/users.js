@@ -25,8 +25,10 @@ router.get("/", requireToken, isAdmin, async (req, res, next) => {
 router.get("/:id", requireToken, async (req, res, next) => {
   try {
     console.log("REQ.PARAMS IN USERS API", req.params)
-    const data = await User.findByPk(req.params.id);
-    res.send(data);
+    if (req.user.id === Number(req.params.id)) {
+      const data = await User.findByPk(req.params.id);
+      res.send(data)
+    }
   } catch (err) {
     next(err);
   }
