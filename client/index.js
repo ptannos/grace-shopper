@@ -11,7 +11,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
       <App />
-      <ToastContainer closeButton={false} position="bottom-right" />
+      <ToastContainer position="top-center" autoClose={5000} />
     </Router>
   </Provider>,
   document.getElementById("app")

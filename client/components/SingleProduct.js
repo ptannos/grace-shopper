@@ -6,7 +6,7 @@ import { updateProduct } from "../store/singleProduct";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-//import "react-toastify/dist/ReactToastify.css";
+import "react-toastify/dist/ReactToastify.css";
 
 class SingleProduct extends React.Component {
   constructor(props) {
@@ -47,8 +47,12 @@ class SingleProduct extends React.Component {
   handleClick() {
     const product = this.props.product;
     const showToast = () => {
-      toast.info("Added to cart!");
+      toast.info("Added to cart!", {
+        position: "top-center",
+        autoClose: 5000,
+      });
     };
+
     if (!this.props.isLoggedIn) {
       this.props.addGuestProduct(product);
       showToast();

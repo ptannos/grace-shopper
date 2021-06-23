@@ -77,3 +77,11 @@ nav {
 img {
   max-width: 75%;
 }
+
+.Toastify__toast-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: space-between;
+  align-items: baseline;
+}
