@@ -1,6 +1,6 @@
 const router = require("express").Router()
 const {
-  models: { Order, Product },
+  models: { Order },
 } = require("../db")
 const OrderedItem = require("../db/models/orderedItem")
 const { requireToken } = require("./gatekeepingMiddleware")
@@ -18,7 +18,6 @@ router.get("/", requireToken, async (req, res, next) => {
 })
 
 // DELETE /api/cart - clear/delete existing cart
-// increment all the products in that cart in inventory
 router.delete("/", requireToken, async (req, res, next) => {
   try {
     const cartOrder = await Order.findCartOrder(req.user.id)
@@ -30,7 +29,6 @@ router.delete("/", requireToken, async (req, res, next) => {
 })
 
 // PUT /api/cart/products/add - increment or add product in cart
-// when adding to cart, decrement product inventory
 router.put("/products/add", requireToken, async (req, res, next) => {
   try {
     const { id, price } = req.body
@@ -56,7 +54,6 @@ router.put("/products/add", requireToken, async (req, res, next) => {
 })
 
 // PUT /api/cart/products/remove - decrement or remove product in cart
-// when removing from cart, increment product inventory
 router.put("/products/remove", requireToken, async (req, res, next) => {
   try {
     const { id, price } = req.body
@@ -75,7 +72,6 @@ router.put("/products/remove", requireToken, async (req, res, next) => {
 })
 
 // DELETE api/cart/products/:id - delete a product (row) in cart
-// when deleting a product row, increment by that qty in inventory
 router.delete("/products/:id", requireToken, async (req, res, next) => {
   try {
     const cart = await Order.findCartOrder(req.user.id)
