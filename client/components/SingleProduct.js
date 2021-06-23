@@ -1,10 +1,12 @@
 import React from "react";
 import { fetchSingleProduct } from "../store/singleProduct";
-import { _addToCart } from "../store/cartGuest"
-import { _addToUserCart } from '../store/cartUser';
+import { _addToCart } from "../store/cartGuest";
+import { _addToUserCart } from "../store/cartUser";
 import { updateProduct } from "../store/singleProduct";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+//import "react-toastify/dist/ReactToastify.css";
 
 class SingleProduct extends React.Component {
   constructor(props) {
@@ -43,13 +45,17 @@ class SingleProduct extends React.Component {
   }
 
   handleClick() {
-    const product = this.props.product
+    const product = this.props.product;
+    const showToast = () => {
+      toast.info("Added to cart!");
+    };
     if (!this.props.isLoggedIn) {
-      this.props.addGuestProduct(product)
+      this.props.addGuestProduct(product);
+      showToast();
     } else {
       this.props.addUserProduct(product);
+      showToast();
     }
-    //alert("Added to cart!");
   }
 
   render() {
