@@ -9,6 +9,11 @@ import CreateProduct from "./components/CreateProduct";
 import { UserCheckout, GuestCheckout } from "./components/Checkout";
 import Confirmation from "./components/Confirmation";
 import AllUsers from "./components/AllUsers";
+
+import OrderHistory from "./components/OrderHistory";
+
+import SingleUser from "./components/SingleUser";
+
 import { Login, Signup } from "./components/AuthForm";
 import { me } from "./store";
 
@@ -26,20 +31,16 @@ class Routes extends Component {
       <div>
         {isAdmin ? (
           <Switch>
-            <Route path="/users" component={AllUsers} />
-            {/* <Route exact path="/products/create" component={CreateProduct} /> */}
+            <Route exact path="/users" component={AllUsers} />
           </Switch>
         ) : (
           <Switch>
-            <Route path="/users">This page is for our eyes only.</Route>
-            {/* <Route exact path="/products/create">
-              This page is for our eyes only.
-            </Route> */}
+            <Route exact path="/users">This page is for our eyes only.</Route>
           </Switch>
         )}
         {isLoggedIn ? (
           <Switch>
-            {/* <Redirect to="/" /> */}
+            <Redirect to="/" />
             <Route path="/cart" component={UserCart}></Route>
             <Route path="/checkout" component={UserCheckout}></Route>
           </Switch>
@@ -56,7 +57,9 @@ class Routes extends Component {
           <Route exact path="/" component={AllProducts} />
           <Route exact path="/products/create" component={CreateProduct} />
           <Route exact path="/products/:id" component={SingleProduct} />
+          <Route path="/users/:id" component={SingleUser} />
           <Route path="/confirmation" component={Confirmation} />
+          <Route path="/orders/user/:userId" component={OrderHistory} />
         </Switch>
       </div>
     );

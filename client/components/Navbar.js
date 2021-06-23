@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import Home from "./Home"
 import { logout } from "../store"
 
-const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
+const Navbar = ({ handleClick, isLoggedIn, isAdmin, user }) => (
   <div>
     <h1>Plate Hopper</h1>
     <Home />
@@ -14,6 +14,7 @@ const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
       {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
+          <Link to={`/users/${user.id}`}>My Account</Link>
           <a href="#" onClick={handleClick}>
             Logout
           </a>
@@ -42,11 +43,14 @@ const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
  * CONTAINER
  */
 const mapState = (state) => {
+  console.log("NAVBAR STATE>>>>>", state)
+
   return {
     isLoggedIn: !!state.auth.id,
     isAdmin: state.auth.isAdmin,
-  }
-}
+    user: state.auth
+  };
+};
 
 const mapDispatch = (dispatch) => {
   return {
@@ -58,11 +62,4 @@ const mapDispatch = (dispatch) => {
 
 export default connect(mapState, mapDispatch)(Navbar)
 
-// {isAdmin ? (
-//   <div>
-//     <Link to="/products/create">Add New Product</Link>
-//     <Link to="/users">View All Users</Link>
-//   </div>
-// ) : (
-//   <div>''</div>
-// )}
+
