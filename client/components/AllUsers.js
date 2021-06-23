@@ -20,6 +20,8 @@ class AllUsers extends React.Component {
           <tbody>
             <tr>
               <th>ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
               <th>Username</th>
               <th>Email</th>
             </tr>
@@ -27,6 +29,8 @@ class AllUsers extends React.Component {
             {users.map((user) => (
               <tr key={user.id}>
                 <td>{user.id}</td>
+                <td>{user.firstName}</td>
+                <td>{user.lastName}</td>
                 <td>{user.username}</td>
                 <td>{user.email}</td>
               </tr>
