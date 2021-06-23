@@ -1,6 +1,6 @@
-const Sequelize = require("sequelize");
-const db = require("../db");
-const Product = require("./product");
+const Sequelize = require("sequelize")
+const db = require("../db")
+const Product = require("./product")
 
 const Order = db.define("order", {
   totalPrice: {
@@ -30,7 +30,19 @@ const Order = db.define("order", {
     allowNull: false,
     defaultValue: "cart",
   },
-});
+})
+
+// Create a new "cart"
+Order.createNewCart = function (productPrice, userId) {
+  return Order.create({
+    totalPrice: productPrice,
+    totalQty: 1,
+    recipient: "",
+    shippingAddress: "",
+    status: "cart",
+    userId,
+  })
+}
 
 // Find order of a user w/ "cart" status
 Order.findCartOrder = function (id) {
@@ -40,8 +52,8 @@ Order.findCartOrder = function (id) {
       status: "cart",
     },
     include: [{ model: Product }],
-  });
-};
+  })
+}
 
 // Add single product to an order
 Order.prototype.addProductToOrder = function (productId, price) {
@@ -61,8 +73,8 @@ Order.prototype.addProductsToOrder = function (products) {
         itemQty: item.count,
         itemPrice: item.subtotal,
       },
-    });
-  });
-};
+    })
+  })
+}
 
-module.exports = Order;
+module.exports = Order

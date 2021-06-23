@@ -42,7 +42,7 @@ class UserCart extends Component {
                   <td>{name}</td>
                   <td>${price}.00</td>
                   <td>${subtotal}.00</td>
-                  <td onClick={() => this.props.removeProduct({ id })}>
+                  <td onClick={() => this.props.removeProduct({ id, price })}>
                     {count > 0 ? <button> - </button> : ""}
                   </td>
                   <td>{count}</td>
