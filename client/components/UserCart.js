@@ -1,25 +1,25 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { Component } from "react"
+import { connect } from "react-redux"
+import { Link } from "react-router-dom"
 import {
   _loadUserCart,
   _addToUserCart,
   _subtractFromUserCart,
   _deleteFromUserCart,
   _clearUserCart,
-} from "../store/cartUser";
+} from "../store/cartUser"
 
 class UserCart extends Component {
   constructor(props) {
-    super(props);
+    super(props)
   }
 
   componentDidMount() {
-    this.props.getUserCart();
+    this.props.getUserCart()
   }
 
   render() {
-    const cartItems = this.props.cart || [];
+    const cartItems = this.props.cart || []
 
     return (
       <div className="cart">
@@ -38,7 +38,7 @@ class UserCart extends Component {
             {cartItems.map((item) => {
               const { id, name, price, subtotal, count, quantity } = item
               return (
-                <tr key={id}>
+                <tr key={item.id}>
                   <td>{name}</td>
                   <td>${price}.00</td>
                   <td>${subtotal}.00</td>
@@ -81,14 +81,14 @@ class UserCart extends Component {
           </Link>
         </div>
       </div>
-    );
+    )
   }
 }
 
 const mapUser = (state) => {
   return {
     name: "user",
-    cart: state.cartUser
+    cart: state.cartUser,
   }
 }
 

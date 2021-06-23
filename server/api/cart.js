@@ -1,19 +1,19 @@
-const router = require("express").Router();
-const Order = require("../db/models/order");
-const OrderedItem = require("../db/models/orderedItem");
-const { requireToken } = require("./gatekeepingMiddleware");
+const router = require("express").Router()
+const Order = require("../db/models/order")
+const OrderedItem = require("../db/models/orderedItem")
+const { requireToken } = require("./gatekeepingMiddleware")
 
-module.exports = router;
+module.exports = router
 
 // GET /api/cart - retrieve logged-in user's order with "cart" status
 router.get("/", requireToken, async (req, res, next) => {
   try {
-    const cartOrder = await Order.findCartOrder(req.user.id);
-    res.send(cartOrder);
+    const cartOrder = await Order.findCartOrder(req.user.id)
+    res.send(cartOrder)
   } catch (err) {
-    next(err);
+    next(err)
   }
-});
+})
 
 // DELETE /api/cart - clear/delete existing cart
 router.delete("/", requireToken, async (req, res, next) => {
@@ -32,9 +32,10 @@ router.put("/products/add", requireToken, async (req, res, next) => {
     const { id, price } = req.body
     const cart = await Order.findCartOrder(req.user.id)
     if (cart) {
+      await cart.increment({ totalQty: 1, totalPrice: price })
       const product = await OrderedItem.findProductRow(cart.id, id)
       if (product) {
-        await product.increment({ itemQty: 1 })
+        await product.increment({ itemQty: 1, itemPrice: price })
         res.send(product)
       } else {
         const product = await cart.addProductToOrder(id, price)
