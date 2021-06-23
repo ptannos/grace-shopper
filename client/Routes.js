@@ -9,9 +9,7 @@ import CreateProduct from "./components/CreateProduct";
 import { UserCheckout, GuestCheckout } from "./components/Checkout";
 import Confirmation from "./components/Confirmation";
 import AllUsers from "./components/AllUsers";
-
 import OrderHistory from "./components/OrderHistory";
-
 import SingleUser from "./components/SingleUser";
 
 import { Login, Signup } from "./components/AuthForm";
@@ -40,7 +38,7 @@ class Routes extends Component {
         )}
         {isLoggedIn ? (
           <Switch>
-            <Redirect to="/" />
+            {/* <Redirect to="/" /> */}
             <Route path="/cart" component={UserCart}></Route>
             <Route path="/checkout" component={UserCheckout}></Route>
           </Switch>

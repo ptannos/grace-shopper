@@ -61,8 +61,7 @@ class SingleUser extends React.Component {
               <td>{user.email}</td>
             </tbody>
           </table>
-          <button>View Order History</button>
-          <Link></Link>
+          <Link to={`/orders/user/${user.id}`}><button>View Order History</button></Link>
 
         </div>
         {isLoggedIn ? (
