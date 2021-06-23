@@ -1,8 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import {_addToUserCart, _subtractFromUserCart, _loadUserCart} from "../store/cartUser"
-import { _addToCart, _removeFromCart, _subtractFromCart } from '../store/cartGuest';
+import {
+  _addToUserCart,
+  _subtractFromUserCart,
+  _loadUserCart,
+} from "../store/cartUser";
+import {
+  _addToCart,
+  _removeFromCart,
+  _subtractFromCart,
+} from "../store/cartGuest";
 
 class Cart extends Component {
   constructor(props) {
@@ -14,12 +22,12 @@ class Cart extends Component {
   }
 
   render() {
-    const { name } = this.props
+    const { name } = this.props;
     const cartItems = this.props.cart || [];
 
     return (
       <div className="cart" name={name}>
-        <h1>Shopping Cart</h1>
+        <h3>Plate Hopper's Shopping Cart</h3>
         <table>
           <tbody>
             <tr>
@@ -41,7 +49,8 @@ class Cart extends Component {
                     item.count <= 1
                       ? () => this.props.deleteProduct(item)
                       : () => this.props.removeSingleProduct(item)
-                  }>
+                  }
+                >
                   {item.count > 0 ? <button> - </button> : ""}
                 </td>
                 <td>{item.count}</td>
@@ -82,50 +91,33 @@ class Cart extends Component {
 const mapGuest = (state) => {
   return {
     name: "guest",
-    cart: state.cartGuest
-  }
-}
+    cart: state.cartGuest,
+  };
+};
 
 const mapUser = (state) => {
   return {
     name: "user",
-    cart: state.cartUser
-  }
-}
+    cart: state.cartUser,
+  };
+};
 
 const mapGuestDispatch = (dispatch) => {
   return {
     removeSingleProduct: (product) => dispatch(_subtractFromCart(product)),
     deleteProduct: (product) => dispatch(_removeFromCart(product)),
-    addProduct: (product) => dispatch(_addToCart(product))
-  }
-}
+    addProduct: (product) => dispatch(_addToCart(product)),
+  };
+};
 
 const mapUserDispatch = (dispatch) => {
   return {
     getUserCart: () => dispatch(_loadUserCart()),
     removeSingleProduct: (product) => dispatch(_subtractFromUserCart(product)),
     deleteProduct: (product) => dispatch(_subtractFromUserCart(product)),
-    addProduct: (product) => dispatch(_addToUserCart(product))
-  }
-}
-// const mapState = (state) => {
-//   return {
-//     userCart: state.userCart,
-//     guestCart: state.guestCart,
-//     isLoggedIn: !!state.auth.id,
-//   };
-// };
+    addProduct: (product) => dispatch(_addToUserCart(product)),
+  };
+};
 
-// const mapDispatch = (dispatch) => {
-//   return {
-//     deleteProduct: (product) => dispatch(_removeFromCart(product)),
-//     addProduct: (product) => dispatch(_addToCart(product)),
-//     removeSingleProduct: (product) => dispatch(_subtractFromCart(product)),
-//     getUserCart: () => dispatch(_loadUserCart()),
-//   };
-// };
-
-// export default connect(mapState, mapDispatch)(Cart);
-export const GuestCart = connect(mapGuest, mapGuestDispatch)(Cart)
-export const UserCart = connect(mapUser, mapUserDispatch)(Cart)
+export const GuestCart = connect(mapGuest, mapGuestDispatch)(Cart);
+export const UserCart = connect(mapUser, mapUserDispatch)(Cart);

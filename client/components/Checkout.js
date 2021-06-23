@@ -46,9 +46,9 @@ class Checkout extends Component {
 
     return (
       <div>
-        {cartItems ? (
+        {cartItems.length > 0 ? (
           <div className="cart">
-            <h2>Checkout</h2>
+            <h3>Checkout</h3>
             <table>
               <tbody>
                 <tr>

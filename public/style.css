@@ -1,14 +1,62 @@
+/* CSS HEX
+--phthalo-green: #375936;
+--tea-green: #d9e5c7;
+--cafe-au-lait: #a8764d;
+--sky-blue: #96d3ed;
+--blue-sapphire: #2f5c75;
+
+font-family: 'Montserrat', sans-serif;
+font-family: 'Oleo Script Swash Caps', cursive;
+*/
+
 * {
   box-sizing: border-box;
 }
 
 body {
-  font-family: sans-serif;
-  margin: 50px;
+  font-family: "Montserrat", sans-serif;
+  margin: 70px;
+  background-color: #f2f2f3;
+}
+
+hr {
+  color: #2f5c75;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Oleo Script Swash Caps", cursive;
+}
+
+h1 {
+  font-size: 4em;
+  color: #5af;
+}
+
+h3 {
+  font-size: 2em;
+  color: #375936;
+}
+
+h4 {
+  font-size: 1.4em;
+}
+
+.welcome h3 {
+  text-align: right;
+  padding-right: 20px;
 }
 
 a {
   text-decoration: none;
+  font-weight: 600;
+  color: #2f5c75;
+}
+
+a:hover {
+  color: #a8764d;
 }
 
 label {
@@ -34,7 +82,7 @@ form div {
 }
 
 .product {
-  background: lightgray;
+  background: #d9e5c7;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -59,6 +107,7 @@ form div {
   justify-content: space-between;
   align-content: space-between;
   align-items: baseline;
+  padding: 0 10px 0 10px;
 }
 
 .nav-container {
@@ -84,4 +133,5 @@ img {
   justify-content: space-between;
   align-content: space-between;
   align-items: baseline;
+  font-family: "Montserrat", sans-serif;
 }
