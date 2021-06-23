@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const TOKEN = "token";
+
 // action
 const CREATE_ORDER = "CREATE_ORDER";
 
@@ -13,8 +15,12 @@ const createOrder = (order) => ({
 export const _createOrder = (orderInfo, history) => {
   return async (dispatch) => {
     try {
-      //const cartItems = getState().cart.cartItems.slice();
-      const { data } = await axios.put("/api/orders", orderInfo);
+      const token = window.localStorage.getItem(TOKEN)
+      const { data } = await axios.put("/api/orders", orderInfo, {
+        headers: {
+          authorization: token,
+        },
+      })
       dispatch(createOrder(data));
       history.push("/confirmation");
       localStorage.clear();

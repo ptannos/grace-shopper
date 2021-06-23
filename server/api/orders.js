@@ -5,8 +5,8 @@ const {
 const { requireToken, hasToken } = require("./gatekeepingMiddleware");
 module.exports = router;
 
-// GET all orders & all the products in each order
-router.get("/", async (req, res, next) => {
+// GET /api/orders - all orders & all the products in each order
+router.get("/", requireToken, async (req, res, next) => {
   try {
     const orders = await Order.findAll({
       include: [{ model: Product }],
@@ -17,8 +17,8 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// GET a specific order w/ all the products in the order
-router.get("/:id", async (req, res, next) => {
+// GET /api/orders/:id - a specific order w/ all the products in the order
+router.get("/:id", requireToken, async (req, res, next) => {
   try {
     const order = await Order.findByPk(req.params.id, {
       include: [{ model: Product }],
@@ -29,17 +29,14 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-// PUT in an order - create or update
-// If updating, we need pre-existing orderId
-router.put("/", async (req, res, next) => {
+// PUT /api/orders - create a "purchased" order or update a "cart" to "purchased"
+router.put("/", hasToken, async (req, res, next) => {
   try {
-    // grab cartItems from req.body
-    const products = req.body.products || [];
-    if (req.user) {
-      const order = await Order.findCartOrder(req.user.id);
-      await order.update(req.body);
-      //await order.addProductsToOrder(products);
-      res.send(order);
+    const { userId, products } = req.body;
+    if (userId !== null) {
+      const cart = await Order.findCartOrder(req.user.id);
+      await cart.update(req.body);
+      res.send(cart);
     } else {
       const newOrder = await Order.create(req.body);
       await newOrder.addProductsToOrder(products);

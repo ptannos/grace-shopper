@@ -1,12 +1,11 @@
 const router = require("express").Router();
 const Order = require("../db/models/order");
-const OrderedItem = require('../db/models/orderedItem');
-const Product = require("../db/models/product");
-const { requireToken, isUser } = require("./gatekeepingMiddleware");
+const OrderedItem = require("../db/models/orderedItem");
+const { requireToken } = require("./gatekeepingMiddleware");
 
 module.exports = router;
 
-// GET api/cart - retrieve logged-in user's order with "cart" status
+// GET /api/cart - retrieve logged-in user's order with "cart" status
 router.get("/", requireToken, async (req, res, next) => {
   try {
     const cartOrder = await Order.findCartOrder(req.user.id);
@@ -16,60 +15,76 @@ router.get("/", requireToken, async (req, res, next) => {
   }
 });
 
-// PUT api/cart - add or increment product in User cart
-router.put("/:productId", requireToken, async(req,res,next) => {
+// DELETE /api/cart - clear/delete existing cart
+router.delete("/", requireToken, async (req, res, next) => {
   try {
-    //console.log("REQ.BODY IN PUT ROUTE: ", req.body)
-    // find existing cart
-    const cart = await Order.findCartOrder(req.user.id)
-    // if cart exists, we're going to update the target product & increment++
-    //console.log("CART IN PUT ROUTE: ", cart)
-    if (cart) {
-      // find target product on the cart
-      const product = await OrderedItem.findOne({
-        where: {
-          orderId: cart.id,
-          productId: req.body.id
-        }
-      })
-      await product.update(req.body.product)
-      //await product.itemQty++
-      res.send(product)
-    }
-    // if cart doesn't exist, create newOrder with corresponding product
-    // send back updated product info
-    // if (cart) {
-    //   const updatedCart = await cart.update(req.body, cart)
-    //   res.send(updatedCart)
-    // } else {
-    //   const products = req.body.products || []
-    //   const newCart = await Order.create(req.body)
-    //   await newCart.addProductsToOrder(products)
-    //   res.send(newCart)
-    // }
+    const cartOrder = await Order.findCartOrder(req.user.id)
+    await cartOrder.destroy()
+    res.send(cartOrder)
   } catch (err) {
     next(err)
   }
 })
 
-// DELETE api/cart - either decrement or delete product from User cart
-router.delete("/:productId", requireToken, async(req,res,next) => {
+// PUT /api/cart/products/add - increment or add product in cart
+router.put("/products/add", requireToken, async (req, res, next) => {
   try {
-    // find the cart
+    const { id, price } = req.body
     const cart = await Order.findCartOrder(req.user.id)
-    // find the product matching the product in req.body
-    const product = await OrderedItem.findOne({
-      where: {
-        orderId: cart.id,
-        productId: req.params.id
+    if (cart) {
+      const product = await OrderedItem.findProductRow(cart.id, id)
+      if (product) {
+        await product.increment({ itemQty: 1 })
+        res.send(product)
+      } else {
+        const product = await cart.addProductToOrder(id, price)
+        res.send(product)
       }
-    })
-    // if product.itemQty > 1, product.itemQty--
-    if (product.itemQty > 1) product.itemQty--
-    // if product.itemQty <= 1, destroy
-    else await product.destroy()
-    res.send(product)
-  } catch(err) {
+    } else {
+      const newCart = await Order.create({
+        totalPrice: price,
+        totalQty: 1,
+        recipient: "",
+        shippingAddress: "",
+        status: "cart",
+        userId: req.user.id,
+      })
+      await newCart.addProductToOrder(id, price)
+      res.send(newCart.product)
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
+// PUT /api/cart/products/remove - decrement or remove product in cart
+router.put("/products/remove", requireToken, async (req, res, next) => {
+  try {
+    const { id } = req.body
+    const cart = await Order.findCartOrder(req.user.id)
+    if (cart) {
+      const product = await OrderedItem.findProductRow(cart.id, id)
+      if (product.itemQty > 1) {
+        await product.decrement({ itemQty: 1 })
+      } else await product.destroy()
+      res.send(product)
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
+// DELETE api/cart/products/:id - delete all the products in User cart
+router.delete("/products/:id", requireToken, async (req, res, next) => {
+  try {
+    const cart = await Order.findCartOrder(req.user.id)
+    if (cart) {
+      const product = await OrderedItem.findProductRow(cart.id, req.params.id)
+      await product.destroy()
+      console.log("PRODUCT IN DELETE: ", product)
+      res.send(product)
+    }
+  } catch (err) {
     next(err)
   }
 })

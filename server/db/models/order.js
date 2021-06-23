@@ -33,16 +33,27 @@ const Order = db.define("order", {
 });
 
 // Find order of a user w/ "cart" status
-Order.findCartOrder = async function (reqId) {
-  return await Order.findOne({
+Order.findCartOrder = function (id) {
+  return Order.findOne({
     where: {
-      userId: reqId,
+      userId: id,
       status: "cart",
     },
     include: [{ model: Product }],
   });
 };
 
+// Add single product to an order
+Order.prototype.addProductToOrder = function (productId, price) {
+  return this.addProduct(productId, {
+    through: {
+      itemQty: 1,
+      itemPrice: price,
+    },
+  })
+}
+
+// Add an array of products to an order
 Order.prototype.addProductsToOrder = function (products) {
   products.forEach(async (item) => {
     await this.addProduct(item.id, {
