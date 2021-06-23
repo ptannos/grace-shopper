@@ -14,7 +14,6 @@ const requireToken = async (req, res, next) => {
 };
 
 const isAdmin = (req, res, next) => {
-  console.log("REQ USER", req.user);
   if (!req.user.isAdmin) {
     return res.status(403).send("You shall not pass!");
   } else {
@@ -23,7 +22,21 @@ const isAdmin = (req, res, next) => {
   }
 };
 
+const hasToken = async (req, res, next) => {
+  try {
+    const token = req.headers.authorization
+    if (token) {
+      const user = await User.hasToken(token)
+      req.user = user
+    }
+    next()
+  } catch (e) {
+    next(e)
+  }
+}
+
 module.exports = {
   requireToken,
   isAdmin,
+  hasToken,
 };

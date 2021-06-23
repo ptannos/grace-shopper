@@ -69,6 +69,16 @@ User.findByToken = async function(token) {
   }
 }
 
+User.hasToken = async function (token) {
+  try {
+    const { id } = await jwt.verify(token, process.env.JWT)
+    const user = User.findByPk(id)
+    return user
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 /**
  * hooks
  */

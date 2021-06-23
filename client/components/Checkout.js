@@ -8,6 +8,7 @@ class Checkout extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      userId: this.props.isLoggedIn ? this.props.id : null,
       totalPrice: this.props.cart.reduce((total, item) => {
         return item.subtotal + total;
       }, 0),
@@ -31,7 +32,6 @@ class Checkout extends Component {
   }
 
   handleSubmit(event) {
-    console.log("Checkout state in handleSubmit: ", this.state);
     event.preventDefault();
     this.props.createNewOrder(this.state);
     this.props.clearCart();
@@ -118,9 +118,18 @@ class Checkout extends Component {
   }
 }
 
-const mapState = (state) => {
+const mapUserState = (state) => {
   return {
     cart: state.cartUser,
+    isLoggedIn: !!state.auth.id,
+    id: state.auth.id,
+  };
+};
+
+const mapGuestState = (state) => {
+  return {
+    cart: state.cartGuest,
+    isLoggedIn: !!state.auth.id,
   };
 };
 
@@ -129,4 +138,5 @@ const mapDispatch = (dispatch, { history }) => ({
   clearCart: () => dispatch(_clearCart()),
 });
 
-export default connect(mapState, mapDispatch)(Checkout);
+export const UserCheckout = connect(mapUserState, mapDispatch)(Checkout);
+export const GuestCheckout = connect(mapGuestState, mapDispatch)(Checkout);

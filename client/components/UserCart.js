@@ -1,19 +1,25 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import {_addToUserCart, _subtractFromUserCart, _loadUserCart} from "../store/cartUser"
+import React, { Component } from "react"
+import { connect } from "react-redux"
+import { Link } from "react-router-dom"
+import {
+  _loadUserCart,
+  _addToUserCart,
+  _subtractFromUserCart,
+  _deleteFromUserCart,
+  _clearUserCart,
+} from "../store/cartUser"
 
 class UserCart extends Component {
   constructor(props) {
-    super(props);
+    super(props)
   }
 
   componentDidMount() {
-    this.props.getUserCart();
+    this.props.getUserCart()
   }
 
   render() {
-    const cartItems = this.props.cart || [];
+    const cartItems = this.props.cart || []
 
     return (
       <div className="cart">
@@ -29,35 +35,33 @@ class UserCart extends Component {
               <th></th>
               <th></th>
             </tr>
-            {cartItems.map((item) => (
-              <tr key={item.id}>
-                <td>{item.name}</td>
-                <td>${item.price}.00</td>
-                <td>${item.subtotal}.00</td>
-                <td
-                  onClick={
-                    item.count <= 1
-                      ? () => this.props.deleteProduct(item)
-                      : () => this.props.removeSingleProduct(item)
-                  }>
-                  {item.count > 0 ? <button> - </button> : ""}
-                </td>
-                <td>{item.count}</td>
-                <td onClick={() => this.props.addProduct(item)}>
-                  {item.quantity > 0 ? <button> + </button> : ""}
-                </td>
-                <td onClick={() => this.props.deleteProduct(item)}>
-                  {item.count > 0 ? <button> Delete </button> : ""}
-                </td>
-              </tr>
-            ))}
+            {cartItems.map((item) => {
+              const { id, name, price, subtotal, count, quantity } = item
+              return (
+                <tr key={item.id}>
+                  <td>{name}</td>
+                  <td>${price}.00</td>
+                  <td>${subtotal}.00</td>
+                  <td onClick={() => this.props.removeProduct({ id })}>
+                    {count > 0 ? <button> - </button> : ""}
+                  </td>
+                  <td>{count}</td>
+                  <td onClick={() => this.props.addProduct({ id, price })}>
+                    {quantity > 0 ? <button> + </button> : ""}
+                  </td>
+                  <td onClick={() => this.props.deleteProduct(id)}>
+                    {count > 0 ? <button> Delete </button> : ""}
+                  </td>
+                </tr>
+              )
+            })}
           </tbody>
         </table>
         Total price:{" "}
         <strong id="totalPrice">
           $
           {cartItems.reduce((total, item) => {
-            return item.subtotal + total;
+            return item.subtotal + total
           }, 0)}
           .00
         </strong>
@@ -65,7 +69,11 @@ class UserCart extends Component {
           <Link to="/">
             <button>Continue shopping</button>
           </Link>
-          <button className="tiny secondary" id="clear">
+          <button
+            className="tiny secondary"
+            id="clear"
+            onClick={() => this.props.clearCart()}
+          >
             Clear the cart
           </button>
           <Link to="/checkout">
@@ -73,23 +81,24 @@ class UserCart extends Component {
           </Link>
         </div>
       </div>
-    );
+    )
   }
 }
 
 const mapUser = (state) => {
   return {
     name: "user",
-    cart: state.cartUser
+    cart: state.cartUser,
   }
 }
 
 const mapUserDispatch = (dispatch) => {
   return {
     getUserCart: () => dispatch(_loadUserCart()),
-    removeSingleProduct: (product) => dispatch(_subtractFromUserCart(product)),
-    deleteProduct: (product) => dispatch(_subtractFromUserCart(product)),
-    addProduct: (product) => dispatch(_addToUserCart(product))
+    removeProduct: (product) => dispatch(_subtractFromUserCart(product)),
+    addProduct: (product) => dispatch(_addToUserCart(product)),
+    deleteProduct: (id) => dispatch(_deleteFromUserCart(id)),
+    clearCart: () => dispatch(_clearUserCart()),
   }
 }
 

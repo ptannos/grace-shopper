@@ -13,12 +13,6 @@ const OrderedItem = db.define(
         notEmpty: true,
       },
     },
-    // orderId: {
-    //   type: Sequelize.INTEGER,
-    // },
-    // productId: {
-    //   type: Sequelize.INTEGER,
-    // },
     itemQty: {
       type: Sequelize.INTEGER,
     },
@@ -28,5 +22,15 @@ const OrderedItem = db.define(
   },
   { timestamps: false }
 );
+
+// Find a product row matching orderId and incoming productId
+OrderedItem.findProductRow = function (cartId, productId) {
+  return OrderedItem.findOne({
+    where: {
+      orderId: cartId,
+      productId: productId
+    }
+  })
+}
 
 module.exports = OrderedItem;

@@ -3,11 +3,10 @@ import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import AllProducts from "./components/AllProducts";
 import SingleProduct from "./components/SingleProduct";
-import GuestCart from './components/GuestCart';
-import UserCart from './components/UserCart'
+import GuestCart from "./components/GuestCart";
+import UserCart from "./components/UserCart";
 import CreateProduct from "./components/CreateProduct";
-import Cart from "./components/Cart";
-import Checkout from "./components/Checkout";
+import { UserCheckout, GuestCheckout } from "./components/Checkout";
 import Confirmation from "./components/Confirmation";
 import AllUsers from "./components/AllUsers";
 import { Login, Signup } from "./components/AuthForm";
@@ -25,7 +24,6 @@ class Routes extends Component {
     const { isLoggedIn, isAdmin } = this.props;
     return (
       <div>
-
         {isAdmin ? (
           <Switch>
             <Route path="/users" component={AllUsers} />
@@ -43,12 +41,14 @@ class Routes extends Component {
           <Switch>
             {/* <Redirect to="/" /> */}
             <Route path="/cart" component={UserCart}></Route>
+            <Route path="/checkout" component={UserCheckout}></Route>
           </Switch>
         ) : (
           <Switch>
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
             <Route path="/cart" component={GuestCart} />
+            <Route path="/checkout" component={GuestCheckout}></Route>
           </Switch>
         )}
 
@@ -56,8 +56,6 @@ class Routes extends Component {
           <Route exact path="/" component={AllProducts} />
           <Route exact path="/products/create" component={CreateProduct} />
           <Route exact path="/products/:id" component={SingleProduct} />
-          <Route exact path="/cart" component={Cart} />
-          <Route exact path="/checkout" component={Checkout} />
           <Route path="/confirmation" component={Confirmation} />
         </Switch>
       </div>

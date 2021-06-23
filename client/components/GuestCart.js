@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { _addToCart, _removeFromCart, _subtractFromCart } from '../store/cartGuest';
+import { _addToCart, _clearCart, _removeFromCart, _subtractFromCart } from '../store/cartGuest';
 
 class GuestCart extends Component {
   constructor(props) {
@@ -61,7 +61,7 @@ class GuestCart extends Component {
           <Link to="/">
             <button>Continue shopping</button>
           </Link>
-          <button className="tiny secondary" id="clear">
+          <button className="tiny secondary" id="clear" onClick={() => this.props.clearCart()}>
             Clear the cart
           </button>
           <Link to="/checkout">
@@ -83,7 +83,8 @@ const mapGuestDispatch = (dispatch) => {
   return {
     removeSingleProduct: (product) => dispatch(_subtractFromCart(product)),
     deleteProduct: (product) => dispatch(_removeFromCart(product)),
-    addProduct: (product) => dispatch(_addToCart(product))
+    addProduct: (product) => dispatch(_addToCart(product)),
+    clearCart: () => dispatch(_clearCart())
   }
 }
 
