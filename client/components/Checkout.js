@@ -1,48 +1,48 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { _createOrder } from "../store/order";
-import { _clearCart } from "../store/cartGuest";
+import React, { Component } from "react"
+import { connect } from "react-redux"
+import { Link } from "react-router-dom"
+import { _createOrder } from "../store/order"
+import { _clearCart } from "../store/cartGuest"
 
 class Checkout extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       userId: this.props.isLoggedIn ? this.props.id : null,
       totalPrice: this.props.cart.reduce((total, item) => {
-        return item.subtotal + total;
+        return item.subtotal + total
       }, 0),
       totalQty: this.props.cart.reduce((total, item) => {
-        return item.count + total;
+        return item.count + total
       }, 0),
       recipient: "",
       shippingAddress: "",
       status: "purchased",
       products: this.props.cart,
-    };
+    }
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value,
-    });
+    })
   }
 
   handleSubmit(event) {
-    event.preventDefault();
-    this.props.createNewOrder(this.state);
-    this.props.clearCart();
+    event.preventDefault()
+    this.props.createNewOrder(this.state)
+    this.props.clearCart()
   }
 
   render() {
-    const cartItems = this.props.cart || [];
+    const cartItems = this.props.cart || []
 
     const totalPrice = cartItems.reduce((total, item) => {
-      return item.subtotal + total;
-    }, 0);
+      return item.subtotal + total
+    }, 0)
 
     return (
       <div>
@@ -53,25 +53,30 @@ class Checkout extends Component {
               <tbody>
                 <tr>
                   <th>Name</th>
-                  <th>Price</th>
-                  <th></th>
                   <th>Count</th>
+                  <th>Price</th>
                 </tr>
                 {cartItems.map((item) => (
                   <tr key={item.id}>
                     <td>{item.name}</td>
-                    <td>${item.price}.00</td>
                     <td>{item.count}</td>
+                    <td>${item.price}.00</td>
                   </tr>
                 ))}
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    Order total:{" "}
+                    <strong id="totalPrice">
+                      ${totalPrice}
+                      .00
+                    </strong>
+                  </td>
+                </tr>
               </tbody>
             </table>
             <br />
-            Order total:{" "}
-            <strong id="totalPrice">
-              ${totalPrice}
-              .00
-            </strong>
             <div>
               <form onSubmit={this.handleSubmit}>
                 <div>
@@ -114,7 +119,7 @@ class Checkout extends Component {
           </div>
         )}
       </div>
-    );
+    )
   }
 }
 
@@ -123,20 +128,20 @@ const mapUserState = (state) => {
     cart: state.cartUser,
     isLoggedIn: !!state.auth.id,
     id: state.auth.id,
-  };
-};
+  }
+}
 
 const mapGuestState = (state) => {
   return {
     cart: state.cartGuest,
     isLoggedIn: !!state.auth.id,
-  };
-};
+  }
+}
 
 const mapDispatch = (dispatch, { history }) => ({
   createNewOrder: (order) => dispatch(_createOrder(order, history)),
   clearCart: () => dispatch(_clearCart()),
-});
+})
 
-export const UserCheckout = connect(mapUserState, mapDispatch)(Checkout);
-export const GuestCheckout = connect(mapGuestState, mapDispatch)(Checkout);
+export const UserCheckout = connect(mapUserState, mapDispatch)(Checkout)
+export const GuestCheckout = connect(mapGuestState, mapDispatch)(Checkout)

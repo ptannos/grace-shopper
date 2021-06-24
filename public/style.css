@@ -15,7 +15,7 @@ font-family: 'Oleo Script Swash Caps', cursive;
 
 body {
   font-family: "Montserrat", sans-serif;
-  margin: 70px;
+  margin: 70px 80px 150px 80px;
   background-color: #f2f2f3;
 }
 
@@ -134,4 +134,66 @@ img {
   align-content: space-between;
   align-items: baseline;
   font-family: "Montserrat", sans-serif;
+}
+
+table {
+  border-collapse: collapse;
+  width: 75%;
+  background-color: white;
+  margin: 50px 0 25px 0;
+}
+
+td,
+th {
+  border: 1px solid #d9e5c7;
+  padding: 12px;
+}
+
+tr:nth-child(even) {
+  background-color: aliceblue;
+}
+
+/* tr:hover {
+  background-color: #d9e5c7;
+} */
+
+th {
+  padding-top: 18px;
+  padding-bottom: 18px;
+  text-align: center;
+  background-color: #2f5c75;
+  color: white;
+}
+
+#cart-price {
+  text-align: right;
+}
+
+.cart table tr:last-child td {
+  border: none;
+  border-top: 2px solid #375936;
+}
+
+button {
+  background-color: #375936;
+  color: #f2f2f3;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 2px;
+  text-align: center;
+  font-family: Montserrat, sans-serif;
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 400;
+  text-decoration: none;
+  margin: 0 15px 0 15px;
+}
+
+table button {
+  padding: 5px 12px;
+  background-color: #77aa74;
+}
+
+button:hover {
+  background-color: #a8764d;
 }
