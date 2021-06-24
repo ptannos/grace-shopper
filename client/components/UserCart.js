@@ -28,11 +28,11 @@ class UserCart extends Component {
           <tbody>
             <tr>
               <th>Name</th>
+              <th></th>
+              <th>Qty</th>
+              <th></th>
               <th>Price</th>
               <th>Subtotal</th>
-              <th></th>
-              <th>Count</th>
-              <th></th>
               <th></th>
             </tr>
             {cartItems.map((item) => {
@@ -40,8 +40,6 @@ class UserCart extends Component {
               return (
                 <tr key={item.id}>
                   <td>{name}</td>
-                  <td>${price}.00</td>
-                  <td>${subtotal}.00</td>
                   <td onClick={() => this.props.removeProduct({ id, price })}>
                     {count > 0 ? <button> - </button> : ""}
                   </td>
@@ -49,23 +47,35 @@ class UserCart extends Component {
                   <td onClick={() => this.props.addProduct({ id, price })}>
                     {quantity > 0 ? <button> + </button> : ""}
                   </td>
+                  <td id="cart-price">${price}.00</td>
+                  <td id="cart-price">${subtotal}.00</td>
                   <td onClick={() => this.props.deleteProduct(id)}>
                     {count > 0 ? <button> Delete </button> : ""}
                   </td>
                 </tr>
               );
             })}
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td id="cart-price">
+                Total price:{" "}
+                <strong id="totalPrice">
+                  $
+                  {cartItems.reduce((total, item) => {
+                    return item.subtotal + total
+                  }, 0)}
+                  .00
+                </strong>
+              </td>
+              <td></td>
+            </tr>
           </tbody>
         </table>
-        Total price:{" "}
-        <strong id="totalPrice">
-          $
-          {cartItems.reduce((total, item) => {
-            return item.subtotal + total;
-          }, 0)}
-          .00
-        </strong>
-        <div className="row-cart">
+        <div className="cart-buttons">
           <Link to="/">
             <button className="cart-button">Continue shopping</button>
           </Link>

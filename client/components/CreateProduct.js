@@ -26,8 +26,8 @@ class CreateProduct extends React.Component {
   }
 
   handleSubmit(evt) {
-    evt.preventDefault();
-    this.props.addProduct({ ...this.state });
+    evt.preventDefault()
+    this.props.addProduct({ ...this.state })
   }
 
   render() {
@@ -74,19 +74,19 @@ class CreateProduct extends React.Component {
           <div>This page is for our eyes only!</div>
         )}
       </>
-    );
+    )
   }
 }
 
 const mapState = (state) => {
   return {
     isAdmin: state.auth.isAdmin,
-  };
-};
+  }
+}
 
 const mapDispatchToProps = (dispatch, { history }) => {
   return {
     addProduct: (product) => dispatch(createProduct(product, history)),
-  };
-};
-export default connect(mapState, mapDispatchToProps)(CreateProduct);
+  }
+}
+export default connect(mapState, mapDispatchToProps)(CreateProduct)
