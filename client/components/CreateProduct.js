@@ -1,11 +1,11 @@
-import React from "react"
-import { connect } from "react-redux"
-import { createProduct } from "../store/createProduct"
-import { Link } from "react-router-dom"
+import React from "react";
+import { connect } from "react-redux";
+import { createProduct } from "../store/createProduct";
+import { Link } from "react-router-dom";
 
 class CreateProduct extends React.Component {
   constructor() {
-    super()
+    super();
     this.state = {
       name: "",
       description: "",
@@ -14,15 +14,15 @@ class CreateProduct extends React.Component {
       quantity: 0,
       price: 0,
       country: "",
-    }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(evt) {
     this.setState({
       [evt.target.name]: evt.target.value,
-    })
+    });
   }
 
   handleSubmit(evt) {
@@ -31,10 +31,10 @@ class CreateProduct extends React.Component {
   }
 
   render() {
-    const { handleChange, handleSubmit } = this
-    const { isAdmin } = this.props
+    const { handleChange, handleSubmit } = this;
+    const { isAdmin } = this.props;
     const { name, description, imageURL, prepTime, quantity, price, country } =
-      this.state
+      this.state;
     return (
       <>
         {isAdmin ? (

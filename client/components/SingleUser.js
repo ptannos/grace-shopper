@@ -1,7 +1,7 @@
-import React from "react"
-import { fetchSingleUser, updateUser } from "../store/singleUser"
-import { connect } from "react-redux"
-import { Link } from "react-router-dom"
+import React from "react";
+import { fetchSingleUser, updateUser } from "../store/singleUser";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 class SingleUser extends React.Component {
   constructor(props) {
@@ -12,14 +12,14 @@ class SingleUser extends React.Component {
       username: "",
       password: "",
       email: "",
-    }
-    this.handleEdit = this.handleEdit.bind(this)
-    this.handleChange = this.handleChange.bind(this)
+    };
+    this.handleEdit = this.handleEdit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
-    const id = this.props.match.params.id
-    this.props.loadSingleUser(id)
+    const id = this.props.match.params.id;
+    this.props.loadSingleUser(id);
   }
 
   handleChange(evt) {
@@ -67,7 +67,7 @@ class SingleUser extends React.Component {
         <br />
         {isLoggedIn ? (
           <form id="product-form" onSubmit={handleEdit}>
-            <h2>Edit My Info</h2>
+            <h3>Edit My Info</h3>
             <label htmlFor="firstName">First Name:</label>
             <input name="firstName" onChange={handleChange} value={firstName} />
 
@@ -85,7 +85,7 @@ class SingleUser extends React.Component {
           <div>You must be lost! Login again to see your account.</div>
         )}
       </div>
-    )
+    );
   }
 }
 

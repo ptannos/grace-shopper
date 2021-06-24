@@ -1,12 +1,12 @@
-import React, { Component } from "react"
-import { connect } from "react-redux"
-import { Link } from "react-router-dom"
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   _addToCart,
   _clearCart,
   _removeFromCart,
   _subtractFromCart,
-} from "../store/cartGuest"
+} from "../store/cartGuest";
 
 class GuestCart extends Component {
   constructor(props) {
@@ -18,7 +18,7 @@ class GuestCart extends Component {
 
     return (
       <div className="cart">
-        <h1>Shopping Cart</h1>
+        <h3>Shopping Cart</h3>
         <table>
           <tbody>
             <tr>
@@ -75,7 +75,7 @@ class GuestCart extends Component {
         </table>
         <div className="cart-buttons">
           <Link to="/">
-            <button>Continue shopping</button>
+            <button className="cart-button">Continue shopping</button>
           </Link>
           <button
             className="tiny secondary"
@@ -85,7 +85,7 @@ class GuestCart extends Component {
             Clear the cart
           </button>
           <Link to="/checkout">
-            <button>Proceed to checkout</button>
+            <button className="cart-button">Proceed to checkout</button>
           </Link>
         </div>
       </div>
@@ -109,4 +109,4 @@ const mapGuestDispatch = (dispatch) => {
 }
 
 // export default connect(mapState, mapDispatch)(Cart);
-export default connect(mapGuest, mapGuestDispatch)(GuestCart)
+export default connect(mapGuest, mapGuestDispatch)(GuestCart);

@@ -100,11 +100,13 @@ class Checkout extends Component {
                     />
                   </label>
                   <br />
-                  <div className="row">
+                  <div>
                     <Link to="/cart">
-                      <button>Back To Cart</button>
+                      <button className="cart-button">Back To Cart</button>
                     </Link>
-                    <button type="submit">Place your order</button>
+                    <button className="cart-button" type="submit">
+                      Place your order
+                    </button>
                   </div>
                 </div>
               </form>
@@ -114,7 +116,7 @@ class Checkout extends Component {
           <div>
             <h3>Nothing to checkout!</h3>
             <Link to="/cart">
-              <button>Back To Cart</button>
+              <button className="cart-button">Back To Cart</button>
             </Link>
           </div>
         )}
