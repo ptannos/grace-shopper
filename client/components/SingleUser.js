@@ -1,7 +1,7 @@
 import React from "react";
-import { fetchSingleUser, updateUser } from "../store/singleUser"
-import { connect } from "react-redux"
-import { Link } from "react-router-dom"
+import { fetchSingleUser, updateUser } from "../store/singleUser";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 class SingleUser extends React.Component {
   constructor(props) {
@@ -11,15 +11,15 @@ class SingleUser extends React.Component {
       lastName: "",
       username: "",
       password: "",
-      email: ""
-    }
-    this.handleEdit = this.handleEdit.bind(this)
-    this.handleChange = this.handleChange.bind(this)
+      email: "",
+    };
+    this.handleEdit = this.handleEdit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
     const id = this.props.match.params.id;
-    this.props.loadSingleUser(id)
+    this.props.loadSingleUser(id);
   }
 
   handleChange(evt) {
@@ -37,15 +37,15 @@ class SingleUser extends React.Component {
   }
 
   render() {
-    const user = this.props.user || {}
-    const { isLoggedIn } = this.props
+    const user = this.props.user || {};
+    const { isLoggedIn } = this.props;
     const { handleChange, handleEdit } = this;
-    const { firstName, lastName, username, email} = this.state;
+    const { firstName, lastName, username, email } = this.state;
 
     return (
       <div>
         <div className="user">
-          <h1>My Info</h1>
+          <h3>My Info</h3>
           <table>
             <tbody>
               <tr>
@@ -63,20 +63,15 @@ class SingleUser extends React.Component {
           </table>
           <button>View Order History</button>
           <Link></Link>
-
         </div>
         {isLoggedIn ? (
           <form id="product-form" onSubmit={handleEdit}>
-            <h2>Edit My Info</h2>
+            <h3>Edit My Info</h3>
             <label htmlFor="firstName">First Name:</label>
             <input name="firstName" onChange={handleChange} value={firstName} />
 
             <label htmlFor="lastName">Last Name:</label>
-            <input
-              name="lastName"
-              onChange={handleChange}
-              value={lastName}
-            />
+            <input name="lastName" onChange={handleChange} value={lastName} />
 
             <label htmlFor="username">Username:</label>
             <input name="username" onChange={handleChange} value={username} />
@@ -92,9 +87,8 @@ class SingleUser extends React.Component {
           <div>You must be lost! Login again to see your account.</div>
         )}
       </div>
-    )
+    );
   }
-
 }
 
 const mapState = (state) => {

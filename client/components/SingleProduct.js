@@ -71,18 +71,28 @@ class SingleProduct extends React.Component {
       this.state;
     return (
       <div>
-        <img src={product.imageURL} />
-        <h3>{product.name}</h3>
-        <p>
-          {product.prepTime} {product.prepTime > 1 ? "hours" : "hour"}
-        </p>
-        <p>${product.price}.00</p>
+        <div id="image-container">
+          <h3>{product.name}</h3>
+          <img width={602} height={339} src={product.imageURL} />
+        </div>
+        <div id="product-info">
+          <b>
+            {product.prepTime} {product.prepTime > 1 ? "hours" : "hour"}
+          </b>
+          <b>${product.price}.00</b>
+        </div>
         <p>{product.description}</p>
-        {product.quantity > 0 ? (
-          <button onClick={() => handleClick()}> Add to Cart</button>
-        ) : (
-          "Sold Out"
-        )}
+        <div className="button-container">
+          {product.quantity > 0 ? (
+            <button id="single-prod-button" onClick={() => handleClick()}>
+              {" "}
+              Add to Cart
+            </button>
+          ) : (
+            "Sold Out"
+          )}
+        </div>
+
         {isAdmin ? (
           <form id="product-form" onSubmit={handleEdit}>
             <h2>Edit Product</h2>

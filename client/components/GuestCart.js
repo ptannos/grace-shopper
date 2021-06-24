@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { _addToCart, _clearCart, _removeFromCart, _subtractFromCart } from '../store/cartGuest';
+import {
+  _addToCart,
+  _clearCart,
+  _removeFromCart,
+  _subtractFromCart,
+} from "../store/cartGuest";
 
 class GuestCart extends Component {
   constructor(props) {
@@ -13,7 +18,7 @@ class GuestCart extends Component {
 
     return (
       <div className="cart">
-        <h1>Shopping Cart</h1>
+        <h3>Shopping Cart</h3>
         <table>
           <tbody>
             <tr>
@@ -35,7 +40,8 @@ class GuestCart extends Component {
                     item.count <= 1
                       ? () => this.props.deleteProduct(item)
                       : () => this.props.removeSingleProduct(item)
-                  }>
+                  }
+                >
                   {item.count > 0 ? <button> - </button> : ""}
                 </td>
                 <td>{item.count}</td>
@@ -57,15 +63,19 @@ class GuestCart extends Component {
           }, 0)}
           .00
         </strong>
-        <div className="row">
+        <div className="row-cart">
           <Link to="/">
-            <button>Continue shopping</button>
+            <button className="cart-button">Continue shopping</button>
           </Link>
-          <button className="tiny secondary" id="clear" onClick={() => this.props.clearCart()}>
+          <button
+            className="cart-button"
+            id="clear"
+            onClick={() => this.props.clearCart()}
+          >
             Clear the cart
           </button>
           <Link to="/checkout">
-            <button>Proceed to checkout</button>
+            <button className="cart-button">Proceed to checkout</button>
           </Link>
         </div>
       </div>
@@ -75,18 +85,18 @@ class GuestCart extends Component {
 
 const mapGuest = (state) => {
   return {
-    cart: state.cartGuest
-  }
-}
+    cart: state.cartGuest,
+  };
+};
 
 const mapGuestDispatch = (dispatch) => {
   return {
     removeSingleProduct: (product) => dispatch(_subtractFromCart(product)),
     deleteProduct: (product) => dispatch(_removeFromCart(product)),
     addProduct: (product) => dispatch(_addToCart(product)),
-    clearCart: () => dispatch(_clearCart())
-  }
-}
+    clearCart: () => dispatch(_clearCart()),
+  };
+};
 
 // export default connect(mapState, mapDispatch)(Cart);
-export default connect(mapGuest, mapGuestDispatch)(GuestCart)
+export default connect(mapGuest, mapGuestDispatch)(GuestCart);
