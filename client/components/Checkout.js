@@ -60,13 +60,13 @@ class Checkout extends Component {
                   <tr key={item.id}>
                     <td>{item.name}</td>
                     <td>{item.count}</td>
-                    <td>${item.price}.00</td>
+                    <td id="cart-price">${item.price}.00</td>
                   </tr>
                 ))}
                 <tr>
                   <td></td>
                   <td></td>
-                  <td>
+                  <td id="cart-price">
                     Order total:{" "}
                     <strong id="totalPrice">
                       ${totalPrice}
