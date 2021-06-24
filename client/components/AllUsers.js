@@ -12,7 +12,6 @@ class AllUsers extends React.Component {
   }
   render() {
     const users = this.props.users || [];
-    console.log("props is AllUsers", this.props);
     return (
       <div className="all-users">
         <h3>Users</h3>
@@ -43,7 +42,6 @@ class AllUsers extends React.Component {
 }
 
 const mapState = (state) => {
-  console.log("this is state in allUsers", state);
   return {
     users: state.allUsers,
   };

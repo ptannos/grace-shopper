@@ -10,15 +10,9 @@ class OrderHistory extends React.Component {
     };
   }
   componentDidMount() {
-    // const userId = this.props.userId;
-    console.log("type of this.props.userId", typeof userId);
-
-    // this.props.loadOrders(this.props.userId);
     this.props.loadOrders(this.props.match.params.userId);
-    console.log("props in comp did mount", this.props);
   }
   render() {
-    console.log("props in order history!", this.props);
     const orders = this.props.orders || [];
     // if (this.props.auth.id !== Number(this.props.match.params.userId)) {
     //   return <p>Unauthorized.</p>;
@@ -58,7 +52,6 @@ class OrderHistory extends React.Component {
 }
 
 const mapState = (state) => {
-  console.log("state in order history", state);
   return {
     orders: state.order.orders,
     isLoggedIn: !!state.auth.id,

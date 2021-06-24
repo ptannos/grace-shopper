@@ -64,7 +64,6 @@ class SingleProduct extends React.Component {
 
   render() {
     const product = this.props.product || {};
-    // console.log("props!", this.props);
     const { handleClick, handleEdit, handleChange } = this;
     const { isAdmin } = this.props;
     const { name, description, imageURL, prepTime, quantity, price, country } =
@@ -135,7 +134,6 @@ class SingleProduct extends React.Component {
 }
 
 const mapState = (state) => {
-  console.log("state in singleproduct", state);
   return {
     product: state.singleProduct,
     isLoggedIn: !!state.auth.id,
