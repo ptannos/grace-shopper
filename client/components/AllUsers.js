@@ -15,7 +15,7 @@ class AllUsers extends React.Component {
     console.log("props is AllUsers", this.props);
     return (
       <div className="all-users">
-        <h1>Users</h1>
+        <h3>Users</h3>
         <table>
           <tbody>
             <tr>

@@ -1,29 +1,29 @@
-import React, { Component } from "react"
-import { connect } from "react-redux"
-import { Link } from "react-router-dom"
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   _loadUserCart,
   _addToUserCart,
   _subtractFromUserCart,
   _deleteFromUserCart,
   _clearUserCart,
-} from "../store/cartUser"
+} from "../store/cartUser";
 
 class UserCart extends Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   componentDidMount() {
-    this.props.getUserCart()
+    this.props.getUserCart();
   }
 
   render() {
-    const cartItems = this.props.cart || []
+    const cartItems = this.props.cart || [];
 
     return (
       <div className="cart">
-        <h1>Shopping Cart</h1>
+        <h3>Shopping Cart</h3>
         <table>
           <tbody>
             <tr>
@@ -36,7 +36,7 @@ class UserCart extends Component {
               <th></th>
             </tr>
             {cartItems.map((item) => {
-              const { id, name, price, subtotal, count, quantity } = item
+              const { id, name, price, subtotal, count, quantity } = item;
               return (
                 <tr key={item.id}>
                   <td>{name}</td>
@@ -53,7 +53,7 @@ class UserCart extends Component {
                     {count > 0 ? <button> Delete </button> : ""}
                   </td>
                 </tr>
-              )
+              );
             })}
           </tbody>
         </table>
@@ -61,27 +61,27 @@ class UserCart extends Component {
         <strong id="totalPrice">
           $
           {cartItems.reduce((total, item) => {
-            return item.subtotal + total
+            return item.subtotal + total;
           }, 0)}
           .00
         </strong>
-        <div className="row">
+        <div className="row-cart">
           <Link to="/">
-            <button>Continue shopping</button>
+            <button className="cart-button">Continue shopping</button>
           </Link>
           <button
-            className="tiny secondary"
+            className="cart-button"
             id="clear"
             onClick={() => this.props.clearCart()}
           >
             Clear the cart
           </button>
           <Link to="/checkout">
-            <button>Proceed to checkout</button>
+            <button className="cart-button">Proceed to checkout</button>
           </Link>
         </div>
       </div>
-    )
+    );
   }
 }
 
@@ -89,8 +89,8 @@ const mapUser = (state) => {
   return {
     name: "user",
     cart: state.cartUser,
-  }
-}
+  };
+};
 
 const mapUserDispatch = (dispatch) => {
   return {
@@ -99,7 +99,7 @@ const mapUserDispatch = (dispatch) => {
     addProduct: (product) => dispatch(_addToUserCart(product)),
     deleteProduct: (id) => dispatch(_deleteFromUserCart(id)),
     clearCart: () => dispatch(_clearUserCart()),
-  }
-}
+  };
+};
 
-export default connect(mapUser, mapUserDispatch)(UserCart)
+export default connect(mapUser, mapUserDispatch)(UserCart);

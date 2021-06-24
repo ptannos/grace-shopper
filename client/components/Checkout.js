@@ -95,21 +95,23 @@ class Checkout extends Component {
                     />
                   </label>
                   <br />
-                  <div className="row">
-                    <Link to="/cart">
-                      <button>Back To Cart</button>
-                    </Link>
-                    <button type="submit">Place your order</button>
-                  </div>
                 </div>
               </form>
+              <div className="row-cart">
+                <Link to="/cart">
+                  <button className="cart-button">Back To Cart</button>
+                </Link>
+                <button className="cart-button" type="submit">
+                  Place your order
+                </button>
+              </div>
             </div>
           </div>
         ) : (
           <div>
             <h3>Nothing to checkout!</h3>
             <Link to="/cart">
-              <button>Back To Cart</button>
+              <button className="cart-button">Back To Cart</button>
             </Link>
           </div>
         )}
