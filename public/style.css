@@ -102,12 +102,6 @@ form div {
   align-items: center;
 }
 
-/* .row-cart {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-} */
-
 #single-prod-button,
 .cart-button {
   background-color: #2f5c75;
