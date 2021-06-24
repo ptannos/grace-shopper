@@ -1,16 +1,16 @@
-import React from "react";
-import { fetchSingleProduct } from "../store/singleProduct";
-import { _addToCart } from "../store/cartGuest";
-import { _addToUserCart } from "../store/cartUser";
-import { updateProduct } from "../store/singleProduct";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React from "react"
+import { fetchSingleProduct } from "../store/singleProduct"
+import { _addToCart } from "../store/cartGuest"
+import { _addToUserCart } from "../store/cartUser"
+import { updateProduct } from "../store/singleProduct"
+import { connect } from "react-redux"
+import { Link } from "react-router-dom"
+import { toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 class SingleProduct extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       name: "",
       description: "",
@@ -19,46 +19,46 @@ class SingleProduct extends React.Component {
       quantity: 0,
       price: 0,
       country: "",
-    };
-    this.handleClick = this.handleClick.bind(this);
-    this.handleEdit = this.handleEdit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    }
+    this.handleClick = this.handleClick.bind(this)
+    this.handleEdit = this.handleEdit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
   componentDidMount() {
-    const id = this.props.match.params.id;
-    this.props.loadSingleProduct(id);
+    const id = this.props.match.params.id
+    this.props.loadSingleProduct(id)
   }
 
   handleChange(evt) {
     this.setState({
       [evt.target.name]: evt.target.value,
-    });
+    })
   }
 
   handleEdit(event) {
-    event.preventDefault();
+    event.preventDefault()
     this.props.editProduct({
       ...this.state,
       id: this.props.product.id,
-    });
+    })
   }
 
   handleClick() {
-    const product = this.props.product;
+    const product = this.props.product
     const showToast = () => {
       toast.info("Added to cart!", {
         position: "top-center",
         autoClose: 5000,
-      });
-    };
+      })
+    }
 
     if (!this.props.isLoggedIn) {
-      this.props.addGuestProduct(product);
-      showToast();
+      this.props.addGuestProduct(product)
+      showToast()
     } else {
-      this.props.addUserProduct(product);
-      showToast();
+      this.props.addUserProduct(product)
+      showToast()
     }
   }
 
@@ -66,27 +66,28 @@ class SingleProduct extends React.Component {
     const product = this.props.product || {};
     const { handleClick, handleEdit, handleChange } = this;
     const { isAdmin } = this.props;
+
     const { name, description, imageURL, prepTime, quantity, price, country } =
-      this.state;
+      this.state
     return (
-      <div>
+      <div id="single-product">
         <div id="image-container">
           <h3>{product.name}</h3>
           <img width={602} height={339} src={product.imageURL} />
         </div>
         <div id="product-info">
-          <b>
-            {product.prepTime} {product.prepTime > 1 ? "hours" : "hour"}
-          </b>
-          <b>${product.price}.00</b>
-        </div>
-        <p>{product.description}</p>
-        <div className="button-container">
+          <p>
+            Prep Time:{" "}
+            <strong>
+              {product.prepTime} {product.prepTime > 1 ? "hours" : "hour"}
+            </strong>
+          </p>
+          <p>
+            Price per kit: <strong>${product.price}.00</strong>
+          </p>
+          <p>{product.description}</p>
           {product.quantity > 0 ? (
-            <button id="single-prod-button" onClick={() => handleClick()}>
-              {" "}
-              Add to Cart
-            </button>
+            <button onClick={() => handleClick()}>Add to Cart</button>
           ) : (
             "Sold Out"
           )}
@@ -129,7 +130,7 @@ class SingleProduct extends React.Component {
           <div></div>
         )}
       </div>
-    );
+    )
   }
 }
 
@@ -138,8 +139,8 @@ const mapState = (state) => {
     product: state.singleProduct,
     isLoggedIn: !!state.auth.id,
     isAdmin: state.auth.isAdmin,
-  };
-};
+  }
+}
 
 const mapDispatch = (dispatch) => {
   return {
@@ -149,7 +150,7 @@ const mapDispatch = (dispatch) => {
     addProduct: (product) => dispatch(_addToCart(product)),
     removeProduct: (product) => dispatch(_removeFromCart(product)),
     editProduct: (id) => dispatch(updateProduct(id)),
-  };
-};
+  }
+}
 
-export default connect(mapState, mapDispatch)(SingleProduct);
+export default connect(mapState, mapDispatch)(SingleProduct)
