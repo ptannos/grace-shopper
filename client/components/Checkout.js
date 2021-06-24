@@ -95,7 +95,7 @@ class Checkout extends Component {
                     />
                   </label>
                   <br />
-                  <div className="row-cart">
+                  <div>
                     <Link to="/cart">
                       <button className="cart-button">Back To Cart</button>
                     </Link>
