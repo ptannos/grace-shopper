@@ -44,7 +44,7 @@ class SingleUser extends React.Component {
 
     return (
       <div className="user">
-        <h1>My Info</h1>
+        <h3>My Info</h3>
         <table>
           <tbody>
             <tr>
