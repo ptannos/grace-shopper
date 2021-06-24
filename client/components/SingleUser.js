@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 class SingleUser extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       firstName: "",
       lastName: "",
@@ -25,22 +25,22 @@ class SingleUser extends React.Component {
   handleChange(evt) {
     this.setState({
       [evt.target.name]: evt.target.value,
-    })
+    });
   }
 
   handleEdit(event) {
-    event.preventDefault()
+    event.preventDefault();
     this.props.editUser({
       ...this.state,
       id: this.props.user.id,
-    })
+    });
   }
 
   render() {
-    const user = this.props.user || {}
-    const { isLoggedIn } = this.props
-    const { handleChange, handleEdit } = this
-    const { firstName, lastName, username, email } = this.state
+    const user = this.props.user || {};
+    const { isLoggedIn } = this.props;
+    const { handleChange, handleEdit } = this;
+    const { firstName, lastName, username, email } = this.state;
 
     return (
       <div className="user">
@@ -90,18 +90,17 @@ class SingleUser extends React.Component {
 }
 
 const mapState = (state) => {
-  console.log("state in singleuser", state)
   return {
     user: state.singleUser,
     isLoggedIn: !!state.auth.id,
-  }
-}
+  };
+};
 
 const mapDispatch = (dispatch) => {
   return {
     loadSingleUser: (id) => dispatch(fetchSingleUser(id)),
     editUser: (id) => dispatch(updateUser(id)),
-  }
-}
+  };
+};
 
-export default connect(mapState, mapDispatch)(SingleUser)
+export default connect(mapState, mapDispatch)(SingleUser);

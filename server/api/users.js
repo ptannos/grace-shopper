@@ -5,7 +5,6 @@ const {
 const { requireToken, isAdmin } = require("./gatekeepingMiddleware");
 module.exports = router;
 
-
 //GET all users
 router.get("/", requireToken, isAdmin, async (req, res, next) => {
   try {
@@ -24,10 +23,9 @@ router.get("/", requireToken, isAdmin, async (req, res, next) => {
 //GET single user
 router.get("/:id", requireToken, async (req, res, next) => {
   try {
-    console.log("REQ.PARAMS IN USERS API", req.params)
     if (req.user.id === Number(req.params.id)) {
       const data = await User.findByPk(req.params.id);
-      res.send(data)
+      res.send(data);
     }
   } catch (err) {
     next(err);

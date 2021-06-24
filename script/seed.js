@@ -461,7 +461,6 @@ async function seed() {
   await curry.setCategories([categories[1], categories[3], categories[8]]);
   await sushi.setCategories(categories[4]);
 
-  // console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
   return {
     users: [grace, cody, murphy, gordon, guy, rachel, sunny],

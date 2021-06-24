@@ -18,7 +18,6 @@ router.get("/", async (req, res, next) => {
 //GET single product
 router.get("/:id", async (req, res, next) => {
   try {
-    console.log("REQPARAMS IN PRODUCT", req.params)
     const data = await Product.findByPk(req.params.id);
     res.send(data);
   } catch (err) {
