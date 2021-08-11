@@ -1,6 +1,6 @@
 # GS Plate Hopper
 
-## Check out the app here: http://plate-hopper.herokuapp.com/
+## Deployed on Heroku: http://plate-hopper.herokuapp.com/
 
 Plate Hopper is a meal-kit delivery service inspired by cuisines from around the world. This e-commerce site was built by Torie Kim, Marcia Rodriguez, Pauline Tannos, and Anna Vaigast during their studies at The Grace Hopper Program at Fullstack Academy. 
 
