@@ -10,6 +10,14 @@ Plate Hopper is a meal-kit delivery service inspired by cuisines from around the
 - Express
 - Sequelize (PostgreSQL)
 
+## Site Features
+
+- Login, logout, & sign up
+- Browse products & view single products
+- Add products to cart (as a registered user or as a guest)
+- View & edit cart
+- Checkout & purchase confirmation
+
 ## Setup
 
 - `npm install`
